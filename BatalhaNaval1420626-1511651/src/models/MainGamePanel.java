@@ -3,12 +3,17 @@ import javax.swing.*;
 import java.awt.geom.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.Font;
+import java.awt.FontMetrics;
 
 
 public class MainGamePanel extends JPanel implements MouseListener{
 	double xIni=30.0,yIni=30.0,larg=80.0,alt=80.0,espLinha=5.0;
 	Line2D.Double hor[]=new Line2D.Double[15];
 	Line2D.Double ver[]=new Line2D.Double[16];
+	String[] letras = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"};
+	String[] nums = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15"};
+
 
 	private static final long serialVersionUID = 1L;
 	
@@ -47,10 +52,18 @@ public class MainGamePanel extends JPanel implements MouseListener{
                 BasicStroke.JOIN_MITER,
                 10.0f));
 		
+		Font font = new Font("Serif", Font.PLAIN, 12);
+		g2d.setFont(font);
+
 		for(int i=0;i<=15;i++) {
+			int x1 = 30*(i+1)+650;
+			if (i<15)
+				g2d.drawString(letras[i], x1+12, 45);
 			g2d.draw(ver[i]);
 		}
 		for(int i=0;i<15;i++) {
+			int y1 = 30*(i+1)+50; 
+			g2d.drawString(nums[i], 662, y1-12);
 			g2d.draw(new Line2D.Double(678.0,50,1133.0,50));
 			g2d.draw(hor[i]);
 		}
