@@ -12,7 +12,7 @@ enum gameState {
 	OVER
 }
 
-public class Game implements ActionListener{
+public class GameController implements ActionListener{
 
 	public static gameState currentGameState = gameState.START;
 	public static JFrame    currentGameFrame;
@@ -30,7 +30,7 @@ public class Game implements ActionListener{
 		
 		switch(currentGameState) {
 		case START:
-			currentGameFrame = new NamesFrame (400,350, this);
+			currentGameFrame = new NamesFrame (400, 350, this);
 			break;
 		
 		case SETUP:
