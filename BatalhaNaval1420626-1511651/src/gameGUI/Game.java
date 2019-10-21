@@ -34,7 +34,7 @@ public class Game implements ActionListener{
 			break;
 		
 		case SETUP:
-			currentGameFrame = new MainGameFrame(800, 800);
+			currentGameFrame = new MainGameFrame(1200, 600);
 			break;
 			
 		default:
