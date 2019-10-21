@@ -1,4 +1,4 @@
-package models;
+package gameGUI;
 import javax.swing.*;
 
 public class MainGamePanel extends JPanel{
