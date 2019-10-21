@@ -1,4 +1,4 @@
-package models;
+package gameGUI;
 import java.awt.*;
 import javax.swing.*;
 

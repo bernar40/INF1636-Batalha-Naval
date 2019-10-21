@@ -1,31 +1,11 @@
-import models.*;
+import gameGUI.*;
 
-enum gameState {
-	START,
-	SETUP,
-	PLAYER1ATTACK,
-	PLAYER2ATTACK,
-	OVER
-}
+public class batalhaNaval{
 
-public class batalhaNaval {
-
-	public static gameState currentGameState = gameState.SETUP;
+	public static Game game = new Game();
 	
 	public static void main(String[] args) {
+		game.start();
 		
-		switch(currentGameState) {
-			case START:
-				(new NamesFrame(400,350)).setVisible(true);
-				break;
-			
-			case SETUP:
-				(new MainGameFrame(1200,600)).setVisible(true);
-				break;
-				
-			default:
-				break;
-		}
 	}
-
 }

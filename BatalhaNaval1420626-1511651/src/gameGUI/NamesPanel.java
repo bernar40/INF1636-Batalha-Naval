@@ -1,11 +1,14 @@
-package models;
+package gameGUI;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
-public class NamesPanel extends JPanel {
+public class NamesPanel extends JPanel{
 	
-	public NamesPanel() {
+	public NamesPanel(ActionListener e) {
 		JButton confirmButton = new JButton("Confirma");
 		confirmButton.setBounds(100, 200, 140, 40);
+		confirmButton.addActionListener(e);
 	 
 		//Player 1
 		JLabel labelPlayer1 = new JLabel();		
@@ -31,6 +34,5 @@ public class NamesPanel extends JPanel {
 		this.setLayout(null);    
 		this.setVisible(true);    
 	}
-	
  
 }

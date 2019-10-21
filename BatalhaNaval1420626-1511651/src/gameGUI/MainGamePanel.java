@@ -1,4 +1,4 @@
-package models;
+package gameGUI;
 import javax.swing.*;
 import java.awt.geom.*;
 import java.awt.*;
@@ -74,7 +74,7 @@ public class MainGamePanel extends JPanel implements MouseListener{
 		x-=30;
 		y-=30;
 		
-		int j = x/30;
+		int j = x/30 - 21;
 		int i = y/30;
 		
 		System.out.printf("Clicked %d, %d\n", i, j);
