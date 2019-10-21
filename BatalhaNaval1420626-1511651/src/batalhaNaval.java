@@ -20,7 +20,7 @@ public class batalhaNaval {
 				break;
 			
 			case SETUP:
-				(new MainGameFrame(900,900)).setVisible(true);
+				(new MainGameFrame(1200,600)).setVisible(true);
 				break;
 				
 			default:
