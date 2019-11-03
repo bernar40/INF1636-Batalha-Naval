@@ -71,11 +71,18 @@ public class MainGamePanel extends JPanel implements MouseListener{
 	
 	public void mouseClicked(MouseEvent e) {
 		int x=e.getX(),y=e.getY();
-		x-=30;
-		y-=30;
 		
-		int j = x/30 - 21;
-		int i = y/30;
+		if(x < 678 || x > 1133)
+			return;
+		
+		if(y < 50 || y > 500)
+			return;
+		
+		x-=678;
+		y-=50;
+		
+		int j = x/30 +1;
+		int i = y/30 +1;
 		
 		System.out.printf("Clicked %d, %d\n", i, j);
 	}
