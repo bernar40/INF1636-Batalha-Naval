@@ -1,5 +1,6 @@
 package rules.Weapons;
 
+import java.util.*;
 import utils.*;
 
 enum weaponState {
@@ -9,9 +10,12 @@ enum weaponState {
 }
 
 public interface IWeapon {
-	public int indexX = 0;
-	public int indexY = 0;
+	// public Position pos = new Position(-1,-1);
 	public weaponState state = weaponState.SETUP;
 	
-	private ArrayList<Position> weaponPositions = new ArrayList<Position>();
+	int weaponHealth = 0;
+	ArrayList<Position> weaponPositions = new ArrayList<Position>();
+	
+	public Boolean weaponWasHit();
+	public ArrayList<Position> placeWeaponInGrid(Position leftCornerPosition);
 }

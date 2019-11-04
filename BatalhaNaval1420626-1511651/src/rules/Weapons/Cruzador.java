@@ -1,5 +1,40 @@
 package rules.Weapons;
 
-public class Cruzador implements IWeapon {
+import java.util.*;
+import utils.Position;
 
+public class Cruzador implements IWeapon {
+	// public Position pos = new Position(-1,-1);
+	public weaponState state = weaponState.SETUP;
+	
+	int weaponHealth = 0;
+	ArrayList<Position> weaponPositions = new ArrayList<Position>();
+	
+	public Cruzador() {
+		weaponHealth = 4;
+		
+		weaponPositions.add(new Position(0,0));
+		weaponPositions.add(new Position(1,0));
+		weaponPositions.add(new Position(2,0));
+		weaponPositions.add(new Position(3,0));
+	}
+	
+	public Boolean weaponWasHit() {
+		weaponHealth--;
+		
+		if(weaponHealth == 0)
+			return true;
+		
+		return false;
+	}
+	
+	public ArrayList<Position> placeWeaponInGrid(Position leftCornerPosition){
+		ArrayList<Position> returningPositions = new ArrayList<Position>();
+		
+		for(Position p : weaponPositions) {
+			returningPositions.add(Position.add(p, leftCornerPosition));
+		}
+		
+		return returningPositions;
+	}
 }
