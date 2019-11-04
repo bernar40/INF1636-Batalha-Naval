@@ -2,6 +2,8 @@ package gameGUI;
 import java.awt.*;
 import javax.swing.*;
 
+import utils.Position;
+
 public class MainGameFrame extends JFrame {
 
 	public MainGameFrame(int wid, int hei) {
@@ -11,9 +13,11 @@ public class MainGameFrame extends JFrame {
 		int sa=screenSize.height;
 		int x=sl/2-wid/2;
 		int y=sa/2-hei/2;
+		Position iniPos = new Position (680, 50);
+		Position finalPos = new Position (1133, 500);
 		setBounds(x,y,wid,hei);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		getContentPane().add(new MainGamePanel());
+		getContentPane().add(new MainGamePanel(iniPos, finalPos));
 		setTitle("Batalha Naval");
 	}
 }
