@@ -3,7 +3,7 @@ import utils.*;
 import javax.swing.*;
 import models.weaponGraphics;
 import rules.Weapons.WeaponType;
-
+import models.GridGraphics;
 import java.awt.geom.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -11,7 +11,6 @@ import java.awt.event.*;
 
 
 public class MainGamePanel extends JPanel implements MouseListener{
-	public Grid setupGrid;
 	public weaponGraphics submarino1;
 	public weaponGraphics submarino2;
 	public weaponGraphics submarino3;
@@ -27,6 +26,7 @@ public class MainGamePanel extends JPanel implements MouseListener{
 	public weaponGraphics hidroaviao4;
 	public weaponGraphics hidroaviao5;
 	public weaponGraphics couracado;
+	public GridGraphics setupGrid;
 	public Position iniPos;
 	public Position finalPos;
 	public Position sub1UpperLeftCorner = new Position (100, 100);
@@ -49,7 +49,7 @@ public class MainGamePanel extends JPanel implements MouseListener{
 	public MainGamePanel(Position iniPos, Position finalPos) {
 		this.iniPos = iniPos;
 		this.finalPos = finalPos;
-		setupGrid = new Grid (iniPos, finalPos);
+		setupGrid = new GridGraphics (iniPos, finalPos);
 		addMouseListener(this);
 		setupGrid.buildGrid();
 		submarino1 = new weaponGraphics (WeaponType.SUBMARINO, sub1UpperLeftCorner, 30, Color.red);
@@ -134,6 +134,8 @@ public class MainGamePanel extends JPanel implements MouseListener{
 		
 		int j = x/30 +1;
 		int i = y/30 +1;
+		
+		setupGrid.setGridValue(new Position(i, j));
 		
 		System.out.printf("Clicked %d, %d\n", i, j);
 	}

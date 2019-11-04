@@ -1,10 +1,9 @@
-package gameGUI;
+package models;
 import java.awt.geom.Line2D;
 import java.awt.*;
-
 import utils.*;
 
-public class Grid {
+public class GridGraphics {
 	private double iniX;
 	private double iniY;
 	private double finalX;
@@ -17,14 +16,15 @@ public class Grid {
 	private Font font = new Font("Serif", Font.PLAIN, 12);
 	private String[] letras = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"};
 	private String[] nums = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15"};
+	private Grid gridValues;
 
 	
-	public Grid(Position iniPosition, Position finalPosition) {
+	public GridGraphics(Position iniPosition, Position finalPosition) {
 		iniX = iniPosition.getX();
 		iniY = iniPosition.getY();
 		finalX = finalPosition.getX();
 		finalY = finalPosition.getY();
-		
+		gridValues = new Grid(0, 15, 15);	
 	}
 		
 	public void buildGrid() {
@@ -42,6 +42,10 @@ public class Grid {
 				hor[i]=new Line2D.Double(iniX,y1,finalX,y1);
 			}
 		}
+	}
+	
+	public void setGridValue(Position p) {
+		gridValues.setValue(p, gridValues.getValue(p) + 1);
 	}
 	
 	public void paintGrid(Graphics g) {
@@ -65,6 +69,31 @@ public class Grid {
 			g2d.drawString(nums[i], (int) (iniX-18), (int) (y1-12));
 			g2d.draw(new Line2D.Double(iniX,iniY,finalX,iniY));
 			g2d.draw(hor[i]);
+		}
+		
+		for(int i=0;i<15;i++) {
+			for(int j=0;j<15;j++) {
+				int gridVal = gridValues.getValue(new Position(i, j));
+				
+				int leftCornerX;
+				int leftCornerY;
+				
+				switch(gridVal) {
+					case 0:
+						break;
+						
+					case 1:
+						//draw a color
+						break;
+						
+					case 2:
+						//draw a different color
+						break;
+						
+					default:
+						break;
+				}
+			}
 		}
 	}
 }
