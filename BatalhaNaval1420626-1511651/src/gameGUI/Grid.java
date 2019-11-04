@@ -30,13 +30,17 @@ public class Grid {
 	public void buildGrid() {
 
 		for(int i=0;i<=15;i++) {
-			double x1 = skipX*(i+1)+iniX; 
+			double x1 = skipX*(i+1)+(iniX-skipX); 
 			ver[i]=new Line2D.Double(x1,iniY,x1,finalY);
 		}
-		
 		for(int i=0;i<15;i++) {
 			double y1 = skipY*(i+1)+iniY; 
+			if (i < 13) {
 				hor[i]=new Line2D.Double(iniX,y1,finalX,y1);
+			}
+			else {
+				hor[i]=new Line2D.Double(iniX,y1,finalX,y1);
+			}
 		}
 	}
 	
@@ -51,15 +55,15 @@ public class Grid {
 		g2d.setFont(font);
 
 		for(int i=0;i<=15;i++) {
-			int x1 = 30*(i+1)+650;
+			double x1 = skipX*(i+1)+(iniX-skipX);
 			if (i<15)
-				g2d.drawString(letras[i], x1+12, 45);
+				g2d.drawString(letras[i], (int) (x1) + 12, 45);
 			g2d.draw(ver[i]);
 		}
 		for(int i=0;i<15;i++) {
-			int y1 = 30*(i+1)+50; 
-			g2d.drawString(nums[i], 662, y1-12);
-			g2d.draw(new Line2D.Double(678.0,50,1133.0,50));
+			double y1 = skipY*(i+1)+iniY; 
+			g2d.drawString(nums[i], (int) (iniX-18), (int) (y1-12));
+			g2d.draw(new Line2D.Double(iniX,iniY,finalX,iniY));
 			g2d.draw(hor[i]);
 		}
 	}

@@ -1,5 +1,7 @@
 package models;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.*;
 import rules.Weapons.*;
 import utils.*;
@@ -9,9 +11,9 @@ public class weaponGraphics{
 	private IWeapon 	weapon;
 	private Position 	startingDrawPosition;
 	private int 		drawBlockSize;
-	private String		color;
+	private Color		color;
 	
-	public weaponGraphics(WeaponType weaponType, Position upperLeftCorner, int blockSize) 
+	public weaponGraphics(WeaponType weaponType, Position upperLeftCorner, int blockSize, Color color) 
 	{
 		switch(weaponType) 
 		{
@@ -40,7 +42,8 @@ public class weaponGraphics{
 		}
 		
 		startingDrawPosition = upperLeftCorner;	
-		drawBlockSize = blockSize;		
+		drawBlockSize = blockSize;	
+		this.color = color;
 	}
 	
 	public Boolean wasItClicked (Position mousePos)
@@ -58,15 +61,15 @@ public class weaponGraphics{
 		return false;
 	}
 	
-	public void paint() 
+	public void paint(Graphics g) 
 	{
 		ArrayList<Position> weaponsShape = weapon.placeWeaponInGrid(new Position(0,0));
 		
 		for(Position p: weaponsShape) 
 		{
-			Position adjustedBlockPosition = Position.add(Position.scalar(p, drawBlockSize), startingDrawPosition);
-			
-			//draw square of color starting at adjustedBlockPosition with length drawBlockSize
+			Position adjustedBlockPosition = Position.add(Position.scalar(p, drawBlockSize), startingDrawPosition);			
+			g.setColor(color);
+			g.fillRect (adjustedBlockPosition.getX(), adjustedBlockPosition.getY(), drawBlockSize, drawBlockSize); 
 		}
 	}
 	

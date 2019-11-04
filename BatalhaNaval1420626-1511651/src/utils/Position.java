@@ -28,7 +28,7 @@ public class Position {
 	
 	public Boolean insideSquare(Position upperLeftCorner, int len) {
 		if(X > upperLeftCorner.getX() &&  X < upperLeftCorner.getX() + len) {
-			if(Y > upperLeftCorner.getX() &&  Y < upperLeftCorner.getY() + len) {
+			if(Y > upperLeftCorner.getY() &&  Y < upperLeftCorner.getY() + len) {
 				return true;
 			}
 		}
