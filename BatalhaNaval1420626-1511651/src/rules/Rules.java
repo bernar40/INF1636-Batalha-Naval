@@ -73,15 +73,15 @@ public class Rules {
 		}
 	}
 	
-	public static Boolean setWeaponInCurrentPlayerGrid(IWeapon weapon, Position upperLeftCorner, int weaponId) 
+	public static Boolean setWeaponInCurrentPlayerGrid(IWeapon weapon, Position upperLeftCorner) 
 	{
 		switch (playerTurn) 
 		{
 			case PLAYER1:
-				return player1.setWeaponInGrid(weapon, upperLeftCorner, weaponId);
+				return player1.setWeaponInGrid(weapon, upperLeftCorner);
 				
 			case PLAYER2:
-				return player2.setWeaponInGrid(weapon, upperLeftCorner, weaponId);
+				return player2.setWeaponInGrid(weapon, upperLeftCorner);
 				
 			default:
 				return null;

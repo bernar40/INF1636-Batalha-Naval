@@ -6,6 +6,7 @@ import utils.Position;
 public class HidroAviao implements IWeapon {
 	// public Position pos = new Position(-1,-1);
 	public weaponState state = weaponState.SETUP;
+	public WeaponType type = WeaponType.HIDROAVIAO; 
 	
 	int weaponHealth = 0;
 	ArrayList<Position> weaponPositions = new ArrayList<Position>();

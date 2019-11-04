@@ -12,6 +12,7 @@ enum weaponState {
 public interface IWeapon {
 	// public Position pos = new Position(-1,-1);
 	public weaponState state = weaponState.SETUP;
+	public WeaponType type = null; 
 	
 	int weaponHealth = 0;
 	ArrayList<Position> weaponPositions = new ArrayList<Position>();
