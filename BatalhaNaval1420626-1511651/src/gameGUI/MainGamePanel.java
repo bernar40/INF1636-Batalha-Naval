@@ -132,12 +132,14 @@ public class MainGamePanel extends JPanel implements MouseListener{
 		x-=iniPos.getX();
 		y-=iniPos.getY();
 		
-		int j = x/30 +1;
-		int i = y/30 +1;
+		int j = x/30;
+		int i = y/30;
 		
 		setupGrid.setGridValue(new Position(i, j));
 		
 		System.out.printf("Clicked %d, %d\n", i, j);
+		
+		paintComponent(getGraphics());
 	}
 	
 	public void mouseEntered(MouseEvent e) {}

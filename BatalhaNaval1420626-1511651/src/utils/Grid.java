@@ -5,6 +5,7 @@ public class Grid {
 	
 	public Grid(int initVal, int xSize, int ySize) 
 	{
+		gridValues = new int[xSize][ySize];
 		for(int i = 0; i < xSize; i++) 
 		{
 			for (int j = 0; j < ySize; j++) 

@@ -57,7 +57,38 @@ public class GridGraphics {
                 miterLimit));
 		
 		g2d.setFont(font);
-
+		
+		for(int i=0;i<15;i++) {
+			for(int j=0;j<15;j++) {
+				int gridVal = gridValues.getValue(new Position(i, j));
+				
+				double leftCornerX = skipX*(j+1)+(iniX-skipX);
+				double leftCornerY = skipY*(i)+iniY;
+				
+				switch(gridVal) {
+					case 0:
+						break;
+			
+					case 1:
+						g.setColor(Color.blue);
+						g.fillRect((int)leftCornerX, (int)leftCornerY, 30, 30);
+						break;
+						
+					case 2:
+						g.setColor(Color.yellow);
+						g.fillRect((int)leftCornerX, (int)leftCornerY, 30, 30);
+						//draw a different color
+						break;
+					case 3:
+						g.setColor(Color.red);
+						g.fillRect((int)leftCornerX, (int)leftCornerY, 30, 30);
+						
+					default:
+						break;
+				}
+			}
+		}
+		g.setColor(Color.black);
 		for(int i=0;i<=15;i++) {
 			double x1 = skipX*(i+1)+(iniX-skipX);
 			if (i<15)
@@ -71,29 +102,5 @@ public class GridGraphics {
 			g2d.draw(hor[i]);
 		}
 		
-		for(int i=0;i<15;i++) {
-			for(int j=0;j<15;j++) {
-				int gridVal = gridValues.getValue(new Position(i, j));
-				
-				int leftCornerX;
-				int leftCornerY;
-				
-				switch(gridVal) {
-					case 0:
-						break;
-						
-					case 1:
-						//draw a color
-						break;
-						
-					case 2:
-						//draw a different color
-						break;
-						
-					default:
-						break;
-				}
-			}
-		}
 	}
 }
