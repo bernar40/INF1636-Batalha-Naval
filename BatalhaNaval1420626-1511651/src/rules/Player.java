@@ -1,5 +1,8 @@
 package rules;
+import java.awt.*;
 import java.util.*;
+
+import models.weaponGraphics;
 import rules.Weapons.*;
 import utils.*;
 
@@ -8,8 +11,8 @@ public class Player {
 	private String playerName;
 	private Grid ownWeaponsView;
 	private Grid enemyWeaponsView;
-	private ArrayList<IWeapon>  ownWeapons;
-	private ArrayList<IWeapon> 	enemyWeapons;
+	private ArrayList<Weapon>  ownWeapons;
+	private ArrayList<Weapon> 	enemyWeapons;
 	private int currentWeaponQty;
 	
 	public Player(String name) {
@@ -17,11 +20,11 @@ public class Player {
 		aliveWeapons 		= 15;
 		currentWeaponQty 	= 0;
 		
-		ownWeaponsView = new Grid(-1, 15, 15);
-		enemyWeaponsView = new Grid(-1, 15, 15);
+		ownWeaponsView 		= new Grid(15, 15, -1, Color.white);
+		enemyWeaponsView 	= new Grid(15, 15, -1, Color.white);
 		
-		ownWeapons 		= new ArrayList<IWeapon> ();
-		enemyWeapons 	= new ArrayList<IWeapon> ();
+		ownWeapons 		= new ArrayList<Weapon> ();
+		enemyWeapons 	= new ArrayList<Weapon> ();
 		
 		
 	}
@@ -38,13 +41,13 @@ public class Player {
 		return enemyWeaponsView;
 	}
 	
-	public Boolean setWeaponInGrid(IWeapon weapon, Position upperLeftCorner){
+	public Boolean setWeaponInGrid(Weapon weapon, Position upperLeftCorner){
 		
 		ArrayList<Position> weaponBlocks = weapon.placeWeaponInGrid(upperLeftCorner);
 		
 		for(Position p: weaponBlocks) 
 		{
-			if(ownWeaponsView.getValue(p) != -1) {
+			if(ownWeaponsView.getValue(p).listIndex != -1) {
 				// there is already a weapon there!
 				return false;
 			}
@@ -53,7 +56,7 @@ public class Player {
 		//No overlap found, so gridValues can be set now!	
 		for(Position p: weaponBlocks) 
 		{
-			ownWeaponsView.setValue(p, currentWeaponQty);
+			ownWeaponsView.setValue(p, new GridValue(currentWeaponQty, weaponGraphics.findColorFromWeaponType(weapon)));
 		}
 		
 		ownWeapons.add(weapon);
@@ -64,13 +67,13 @@ public class Player {
 	
 	public WeaponType removeWeaponFromGrid(Position pos) 
 	{
-		int weaponIndex = ownWeaponsView.getValue(pos);
+		GridValue gridValue = ownWeaponsView.getValue(pos);
 		
-		if(weaponIndex != -1) 
+		if(gridValue.listIndex != -1) 
 		{
-			cleanFromOwnGrid(weaponIndex);
+			cleanFromOwnGrid(gridValue.listIndex);
 			
-			IWeapon removedWeapon = ownWeapons.remove(weaponIndex);
+			Weapon removedWeapon = ownWeapons.remove(gridValue.listIndex);
 			
 			return removedWeapon.type;
 		}
@@ -84,8 +87,18 @@ public class Player {
 		{
 			for (int j = 0; j < 15; j++) 
 			{
-				if(ownWeaponsView.getValue(new Position(i,j)) == val) 
-					ownWeaponsView.setValue(new Position(i, j), -1);
+				// Empty space and subtract 1 from bigger indxs accounting for the shift from the remove
+				GridValue gridAtIndx = ownWeaponsView.getValue(new Position(i,j));
+				
+				if(gridAtIndx.listIndex == val)
+				{
+					ownWeaponsView.setValue(new Position(i, j), new GridValue(-1, null));
+				}
+				else if(gridAtIndx.listIndex > val) 
+				{
+					ownWeaponsView.setValue(new Position(i, j), new GridValue(gridAtIndx.listIndex - 1, gridAtIndx.blockColor));
+				}
+					
 			}
 			
 		}

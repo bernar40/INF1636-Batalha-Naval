@@ -19,12 +19,12 @@ public class GridGraphics {
 	private Grid gridValues;
 
 	
-	public GridGraphics(Position iniPosition, Position finalPosition) {
+	public GridGraphics(Position iniPosition, Position finalPosition, Grid grid) {
 		iniX = iniPosition.getX();
 		iniY = iniPosition.getY();
 		finalX = finalPosition.getX();
 		finalY = finalPosition.getY();
-		gridValues = new Grid(0, 15, 15);	
+		gridValues = grid;	
 	}
 		
 	public void buildGrid() {
@@ -45,7 +45,35 @@ public class GridGraphics {
 	}
 	
 	public void setGridValue(Position p) {
-		gridValues.setValue(p, gridValues.getValue(p) + 1);
+		
+		GridValue gridVal = gridValues.getValue(p);
+		Color blockColor = gridVal.blockColor;
+		
+		switch(gridVal.listIndex) {
+			case -1:
+				blockColor = Color.orange;
+				break;
+			
+			case 0:
+				blockColor = Color.pink;
+				break;
+	
+			case 1:
+				blockColor = Color.blue;
+				break;
+				
+			case 2:
+				blockColor = Color.yellow;
+				break;
+				
+			case 3:
+				blockColor = Color.red;
+				break;
+				
+			default:
+				break;
+		}
+		gridValues.setValue(p, new GridValue(gridVal.listIndex + 1, blockColor));
 	}
 	
 	public void paintGrid(Graphics g) {
@@ -60,31 +88,14 @@ public class GridGraphics {
 		
 		for(int i=0;i<15;i++) {
 			for(int j=0;j<15;j++) {
-				int gridVal = gridValues.getValue(new Position(i, j));
+				GridValue gridVal = gridValues.getValue(new Position(i, j));
 				
 				double leftCornerX = skipX*(j+1)+(iniX-skipX);
 				double leftCornerY = skipY*(i)+iniY;
 				
-				switch(gridVal) {
-					case 0:
-						break;
-			
-					case 1:
-						g.setColor(Color.blue);
-						g.fillRect((int)leftCornerX, (int)leftCornerY, 30, 30);
-						break;
-						
-					case 2:
-						g.setColor(Color.yellow);
-						g.fillRect((int)leftCornerX, (int)leftCornerY, 30, 30);
-						//draw a different color
-						break;
-					case 3:
-						g.setColor(Color.red);
-						g.fillRect((int)leftCornerX, (int)leftCornerY, 30, 30);
-						
-					default:
-						break;
+				if(gridVal.listIndex > -1) {
+					g.setColor(gridVal.blockColor);
+					g.fillRect((int)leftCornerX, (int)leftCornerY, 30, 30);
 				}
 			}
 		}

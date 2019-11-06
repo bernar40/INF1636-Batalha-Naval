@@ -1,26 +1,27 @@
 package utils;
+import java.awt.*;
 
 public class Grid {
-	private int[][] gridValues;
+	private GridValue[][] gridValues;
 	
-	public Grid(int initVal, int xSize, int ySize) 
+	public Grid(int xSize, int ySize, int initIndexVal, Color initColor) 
 	{
-		gridValues = new int[xSize][ySize];
+		gridValues = new GridValue[xSize][ySize];
 		for(int i = 0; i < xSize; i++) 
 		{
 			for (int j = 0; j < ySize; j++) 
 			{
-				gridValues[i][j] = initVal;
+				gridValues[i][j] = new GridValue(initIndexVal, initColor);
 			}
 		}
 	}
 	
-	public int getValue(Position p) 
+	public GridValue getValue(Position p) 
 	{
 		return gridValues[p.getX()][p.getY()];
 	}
 	
-	public void setValue(Position p, int val) 
+	public void setValue(Position p, GridValue val) 
 	{
 		gridValues[p.getX()][p.getY()] = val;
 	}

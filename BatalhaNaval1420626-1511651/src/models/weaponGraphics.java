@@ -8,38 +8,14 @@ import utils.*;
 
 public class weaponGraphics{
 
-	private IWeapon 	weapon;
+	private Weapon 		weapon;
 	private Position 	startingDrawPosition;
 	private int 		drawBlockSize;
 	private Color		color;
 	
 	public weaponGraphics(WeaponType weaponType, Position upperLeftCorner, int blockSize, Color color) 
 	{
-		switch(weaponType) 
-		{
-			case COURACADO:
-				weapon = new Couracado();
-				break;
-				
-			case CRUZADOR:
-				weapon = new Cruzador();
-				break;
-				
-			case DESTROYER:
-				weapon = new Destroyer();
-				break;
-				
-			case HIDROAVIAO:
-				weapon = new HidroAviao();
-				break;
-				
-			case SUBMARINO:
-				weapon = new Submarino();
-				break;
-				
-			default:
-				break;
-		}
+		weapon = new Weapon(weaponType);
 		
 		startingDrawPosition = upperLeftCorner;	
 		drawBlockSize = blockSize;	
@@ -73,6 +49,30 @@ public class weaponGraphics{
 		}
 	}
 	
-	
+	public static Color findColorFromWeaponType(Weapon weapon) 
+	{
+		switch(weapon.type) 
+		{
+			case COURACADO:
+				return Color.black;
+				
+			case CRUZADOR:
+				return Color.green;
+				
+			case DESTROYER:
+				return Color.blue;
+				
+			case HIDROAVIAO:
+				return Color.yellow;
+				
+			case SUBMARINO:
+				return Color.red;
+				
+			default:
+				break;
+		}
+		
+		return null;
+	}
 	
 }

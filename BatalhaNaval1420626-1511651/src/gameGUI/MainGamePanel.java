@@ -1,8 +1,9 @@
 package gameGUI;
 import utils.*;
 import javax.swing.*;
-import models.weaponGraphics;
-import rules.Weapons.WeaponType;
+import models.*;
+import rules.*;
+import rules.Weapons.*;
 import models.GridGraphics;
 import java.awt.geom.*;
 import java.awt.*;
@@ -43,11 +44,13 @@ public class MainGamePanel extends JPanel implements MouseListener{
 	public Position hidroaviao5UpperLeftCorner = new Position (500, 250);
 	public Position couracadoUpperLeftCorner = new Position (100, 350);
 	private static final long serialVersionUID = 1L;
+	private WeaponType selectedWeaponType = WeaponType.SUBMARINO;
+	private Rules rules = new Rules("victor", "bernardo");
 	
 	public MainGamePanel(Position iniPos, Position finalPos) {
 		this.iniPos = iniPos;
 		this.finalPos = finalPos;
-		setupGrid = new GridGraphics (iniPos, finalPos);
+		setupGrid = new GridGraphics (iniPos, finalPos, rules.getCurrentPlayerOwnGrid());
 		addMouseListener(this);
 		setupGrid.buildGrid();
 		submarino1 = new weaponGraphics (WeaponType.SUBMARINO, sub1UpperLeftCorner, 30, Color.red);
@@ -89,54 +92,70 @@ public class MainGamePanel extends JPanel implements MouseListener{
 	
 	public void mouseClicked(MouseEvent e) {
 		int x=e.getX(),y=e.getY();
-
-		if (submarino1.wasItClicked(new Position (x, y)))
-			// do something
-		if (submarino2.wasItClicked(new Position (x, y)))
-			// do something
-		if (submarino3.wasItClicked(new Position (x, y)))
-			// do something
-		if (submarino4.wasItClicked(new Position (x, y)))
-			// do something
-		if (destroyer1.wasItClicked(new Position (x, y)))
-			// do something
-		if (destroyer2.wasItClicked(new Position (x, y)))
-			// do something
-		if (destroyer3.wasItClicked(new Position (x, y)))
-			// do something
-		if (cruzador1.wasItClicked(new Position (x, y)))
-			// do something
-		if (cruzador2.wasItClicked(new Position (x, y)))
-			// do something			
-		if (hidroaviao1.wasItClicked(new Position (x, y)))
-			// do something		
-		if (hidroaviao2.wasItClicked(new Position (x, y)))
-			// do something	
-		if (hidroaviao3.wasItClicked(new Position (x, y)))
-			// do something	
-		if (hidroaviao4.wasItClicked(new Position (x, y)))
-			// do something
-		if (hidroaviao5.wasItClicked(new Position (x, y)))
-			// do something	
-		if (couracado.wasItClicked(new Position (x, y)))
-			// do something	
+		
+		if(selectedWeaponType == null) 
+		{
+			if (submarino1.wasItClicked(new Position (x, y)))
+				selectedWeaponType = WeaponType.SUBMARINO;
+				// do something
+			if (submarino2.wasItClicked(new Position (x, y)))
+				selectedWeaponType = WeaponType.SUBMARINO;
+				// do something
+			if (submarino3.wasItClicked(new Position (x, y)))
+				selectedWeaponType = WeaponType.SUBMARINO;
+				// do something
+			if (submarino4.wasItClicked(new Position (x, y)))
+				selectedWeaponType = WeaponType.SUBMARINO;
+				// do something
+			if (destroyer1.wasItClicked(new Position (x, y)))
+				selectedWeaponType = WeaponType.DESTROYER;
+				// do something
+			if (destroyer2.wasItClicked(new Position (x, y)))
+				selectedWeaponType = WeaponType.DESTROYER;
+				// do something
+			if (destroyer3.wasItClicked(new Position (x, y)))
+				selectedWeaponType = WeaponType.DESTROYER;
+				// do something
+			if (cruzador1.wasItClicked(new Position (x, y)))
+				// do something
+			if (cruzador2.wasItClicked(new Position (x, y)))
+				// do something			
+			if (hidroaviao1.wasItClicked(new Position (x, y)))
+				// do something		
+			if (hidroaviao2.wasItClicked(new Position (x, y)))
+				// do something	
+			if (hidroaviao3.wasItClicked(new Position (x, y)))
+				// do something	
+			if (hidroaviao4.wasItClicked(new Position (x, y)))
+				// do something
+			if (hidroaviao5.wasItClicked(new Position (x, y)))
+				// do something	
+			if (couracado.wasItClicked(new Position (x, y)))
+				selectedWeaponType = WeaponType.COURACADO;
+				// do something	
 			
-		if(x < iniPos.getX() || x > finalPos.getX())
-			return;
+			System.out.printf("Selected a ", selectedWeaponType);
+		}
+		else 
+		{
+			if(x < iniPos.getX() || x > finalPos.getX())
+				return;
+			
+			if(y < iniPos.getY() || y > finalPos.getY())
+				return;
+			
+			x-=iniPos.getX();
+			y-=iniPos.getY();
+			
+			int j = x/30;
+			int i = y/30;
+			
+			rules.setWeaponInCurrentPlayerGrid(new Weapon(selectedWeaponType), new Position(i,j));
+			
+			System.out.printf("Clicked %d, %d\n", i, j);
+		}			
 		
-		if(y < iniPos.getY() || y > finalPos.getY())
-			return;
-		
-		x-=iniPos.getX();
-		y-=iniPos.getY();
-		
-		int j = x/30;
-		int i = y/30;
-		
-		setupGrid.setGridValue(new Position(i, j));
-		
-		System.out.printf("Clicked %d, %d\n", i, j);
-		
+		setupGrid = new GridGraphics (iniPos, finalPos, Rules.getCurrentPlayerOwnGrid());
 		paintComponent(getGraphics());
 	}
 	

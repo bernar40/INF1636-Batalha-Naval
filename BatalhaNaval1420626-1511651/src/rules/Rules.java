@@ -73,7 +73,7 @@ public class Rules {
 		}
 	}
 	
-	public static Boolean setWeaponInCurrentPlayerGrid(IWeapon weapon, Position upperLeftCorner) 
+	public static Boolean setWeaponInCurrentPlayerGrid(Weapon weapon, Position upperLeftCorner) 
 	{
 		switch (playerTurn) 
 		{
