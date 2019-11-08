@@ -89,15 +89,15 @@ public class MainGamePanel extends JPanel implements MouseListener{
 			int j = x/30;
 			int i = y/30;
 			
-			rules.setWeaponInCurrentPlayerGrid(new Weapon(selectedWeaponType), new Position(i,j));
+			rules.setWeaponInCurrentPlayerGrid(new Weapon(selectedWeaponType), new Position(i,j));			
+			selectedWeaponType = null;
 			
 			System.out.printf("Clicked %d, %d\n", i, j);
 			selectedWeaponType = null;
 			
 		}			
 		
-		setupGrid = new GridGraphics (iniPos, finalPos, rules.getCurrentPlayerOwnGrid());
-		setupGrid.buildGrid();
+		setupGrid = new GridGraphics (iniPos, finalPos, Rules.getCurrentPlayerOwnGrid());
 		paintComponent(getGraphics());
 	}
 	

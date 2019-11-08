@@ -20,8 +20,8 @@ public class Player {
 		aliveWeapons 		= 15;
 		currentWeaponQty 	= 0;
 		
-		ownWeaponsView 		= new Grid(15, 15, -1, Color.white);
-		enemyWeaponsView 	= new Grid(15, 15, -1, Color.white);
+		ownWeaponsView 		= new Grid(15, 15, -1);
+		enemyWeaponsView 	= new Grid(15, 15, -1);
 		
 		ownWeapons 		= new ArrayList<Weapon> ();
 		enemyWeapons 	= new ArrayList<Weapon> ();
@@ -56,7 +56,7 @@ public class Player {
 		//No overlap found, so gridValues can be set now!	
 		for(Position p: weaponBlocks) 
 		{
-			ownWeaponsView.setValue(p, new GridValue(currentWeaponQty, weaponGraphics.findColorFromWeaponType(weapon)));
+			ownWeaponsView.setValue(p, new GridValue(currentWeaponQty, weapon.type));
 		}
 		
 		ownWeapons.add(weapon);
@@ -96,7 +96,7 @@ public class Player {
 				}
 				else if(gridAtIndx.listIndex > val) 
 				{
-					ownWeaponsView.setValue(new Position(i, j), new GridValue(gridAtIndx.listIndex - 1, gridAtIndx.blockColor));
+					ownWeaponsView.setValue(new Position(i, j), new GridValue(gridAtIndx.listIndex - 1, gridAtIndx.weaponType));
 				}
 					
 			}

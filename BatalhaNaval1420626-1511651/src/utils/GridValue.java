@@ -1,14 +1,14 @@
 package utils;
-import java.awt.*;
+import rules.Weapons.*;
 
 public class GridValue 
 {
 	public int 			listIndex;
-	public Color 		blockColor;
+	public WeaponType 	weaponType;
 	
-	public GridValue(int indx, Color color) 
+	public GridValue(int indx, WeaponType weapon) 
 	{
 		listIndex 	= indx;
-		blockColor 	= color;
+		weaponType 	= weapon;
 	}	
 }

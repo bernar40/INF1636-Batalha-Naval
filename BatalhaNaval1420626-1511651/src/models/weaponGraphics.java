@@ -49,9 +49,9 @@ public class weaponGraphics{
 		}
 	}
 	
-	public static Color findColorFromWeaponType(Weapon weapon) 
+	public static Color findColorFromWeaponType(WeaponType weaponType) 
 	{
-		switch(weapon.type) 
+		switch(weaponType) 
 		{
 			case COURACADO:
 				return Color.black;

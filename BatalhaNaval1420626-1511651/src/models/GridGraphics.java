@@ -47,7 +47,7 @@ public class GridGraphics {
 	public void setGridValue(Position p) {
 		
 		GridValue gridVal = gridValues.getValue(p);
-		Color blockColor = gridVal.blockColor;
+		Color blockColor = weaponGraphics.findColorFromWeaponType(gridVal.weaponType);
 		
 		switch(gridVal.listIndex) {
 			case -1:
@@ -73,7 +73,7 @@ public class GridGraphics {
 			default:
 				break;
 		}
-		gridValues.setValue(p, new GridValue(gridVal.listIndex + 1, blockColor));
+		gridValues.setValue(p, new GridValue(gridVal.listIndex + 1, gridVal.weaponType));
 	}
 	
 	public void paintGrid(Graphics g) {
@@ -94,7 +94,7 @@ public class GridGraphics {
 				double leftCornerY = skipY*(i)+iniY;
 				
 				if(gridVal.listIndex > -1) {
-					g.setColor(gridVal.blockColor);
+					g.setColor(weaponGraphics.findColorFromWeaponType(gridVal.weaponType));
 					g.fillRect((int)leftCornerX, (int)leftCornerY, 30, 30);
 				}
 			}

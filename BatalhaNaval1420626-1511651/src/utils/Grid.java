@@ -4,14 +4,14 @@ import java.awt.*;
 public class Grid {
 	private GridValue[][] gridValues;
 	
-	public Grid(int xSize, int ySize, int initIndexVal, Color initColor) 
+	public Grid(int xSize, int ySize, int initIndexVal) 
 	{
 		gridValues = new GridValue[xSize][ySize];
 		for(int i = 0; i < xSize; i++) 
 		{
 			for (int j = 0; j < ySize; j++) 
 			{
-				gridValues[i][j] = new GridValue(initIndexVal, initColor);
+				gridValues[i][j] = new GridValue(initIndexVal, null);
 			}
 		}
 	}

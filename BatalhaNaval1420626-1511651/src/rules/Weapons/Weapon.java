@@ -16,10 +16,11 @@ public class Weapon {
 	int weaponHealth = 0;
 	ArrayList<Position> weaponPositions = new ArrayList<Position>();
 	
-	public Weapon(WeaponType type) {
+	public Weapon(WeaponType Wtype) {
 		
 		
-		switch(type) {
+		type = Wtype;
+		switch(Wtype) {
 			case COURACADO:
 				weaponHealth = 5;
 				
