@@ -25,4 +25,16 @@ public class Grid {
 	{
 		gridValues[p.getX()][p.getY()] = val;
 	}
+	
+	public Boolean isOutsideOfGrid(Position p) 
+	{
+		try {
+			getValue(p);
+		}
+		catch(Exception e){
+			return true;
+		}
+		
+		return false;	
+	}
 }

@@ -11,11 +11,12 @@ import java.util.ArrayList;
 
 public class MainGamePanel extends JPanel implements MouseListener{
 	public ArrayList<weaponGraphics> weaponList;
+	public ArrayList<weaponGraphics> addedWeaponList;
 	public GridGraphics setupGrid;
 	public Position iniPos;
 	public Position finalPos;
 	private static final long serialVersionUID = 1L;
-	private WeaponType selectedWeaponType = WeaponType.SUBMARINO;
+	private weaponGraphics selectedWeapon = null;
 	private Rules rules = new Rules("victor", "bernardo");
 	
 	
@@ -26,8 +27,9 @@ public class MainGamePanel extends JPanel implements MouseListener{
 		addMouseListener(this);
 		setupGrid.buildGrid();
 		weaponList =  new ArrayList<weaponGraphics>();
+		addedWeaponList = new ArrayList<weaponGraphics>();
 		weaponList.add(new weaponGraphics (WeaponType.SUBMARINO, new Position(100, 100), 30, Color.red));
-		weaponList.add(new weaponGraphics (WeaponType.SUBMARINO, new Position(150, 100), 30, Color.red));
+;		weaponList.add(new weaponGraphics (WeaponType.SUBMARINO, new Position(150, 100), 30, Color.red));
 		weaponList.add(new weaponGraphics (WeaponType.SUBMARINO, new Position(200, 100), 30, Color.red));
 		weaponList.add(new weaponGraphics (WeaponType.SUBMARINO, new Position(250, 100), 30, Color.red));
 		weaponList.add(new weaponGraphics (WeaponType.DESTROYER, new Position(100, 150), 30, Color.blue));
@@ -53,12 +55,41 @@ public class MainGamePanel extends JPanel implements MouseListener{
 	public void mouseClicked(MouseEvent e) {
 		int x=e.getX(),y=e.getY();
 		
-		if(selectedWeaponType == null) 
+		if(selectedWeapon == null) 
 		{
 			for(weaponGraphics w :weaponList)
 				if(w.wasItClicked(new Position (x, y)))
-					selectedWeaponType = w.getWeapon().getType();
 			System.out.printf("Selected a " + selectedWeaponType + "\n");
+					selectedWeapon = w;
+			
+			if(x > iniPos.getX() && x < finalPos.getX()) {
+				if(y > iniPos.getY() && y < finalPos.getY()) {
+					
+					x-=iniPos.getX();
+					y-=iniPos.getY();
+					
+					int j = x/30;
+					int i = y/30;
+					
+					WeaponType wt = rules.removeWeaponInCurrentPlayerGrid(new Position(i,j));
+					
+					//Find weapon in addedWeaponsList
+					if(wt != null) 
+					{
+						for(weaponGraphics w: addedWeaponList) 
+						{
+							if(w.getWeapon().getType() == wt) 
+							{
+								weaponList.add(w);
+								addedWeaponList.remove(w);
+								break;
+							}
+						}
+					}				
+				}
+			}
+
+			
 		}
 		else 
 		{
@@ -73,6 +104,11 @@ public class MainGamePanel extends JPanel implements MouseListener{
 			
 			int j = x/30;
 			int i = y/30;
+			
+			if(rules.setWeaponInCurrentPlayerGrid(new Weapon(selectedWeapon.getWeapon().getType()), new Position(i,j)))
+			{
+				addedWeaponList.add(selectedWeapon);
+			}			
 			
 			System.out.printf("Clicked %d, %d\n", i, j);
 

@@ -77,6 +77,7 @@ public class GridGraphics {
 	}
 	
 	public void paintGrid(Graphics g) {
+		printGrid();
 		Graphics2D g2d=(Graphics2D) g;
 		
 		g2d.setStroke(new BasicStroke(espLinha,
@@ -97,6 +98,10 @@ public class GridGraphics {
 					g.setColor(weaponGraphics.findColorFromWeaponType(gridVal.weaponType));
 					g.fillRect((int)leftCornerX, (int)leftCornerY, 30, 30);
 				}
+				else {
+					g.setColor(Color.white);
+					g.fillRect((int)leftCornerX, (int)leftCornerY, 30, 30);
+				}
 			}
 		}
 		g2d.setColor(Color.black);
@@ -111,6 +116,20 @@ public class GridGraphics {
 			g2d.drawString(nums[i], (int) (iniX-18), (int) (y1-12));
 			g2d.draw(new Line2D.Double(iniX,iniY,finalX,iniY));
 			g2d.draw(hor[i]);
+		}
+		
+	}
+	
+	private void printGrid() {
+		System.out.printf("\n");
+		for(int i=0;i<15;i++) {
+			for(int j=0;j<15;j++) {
+				GridValue gridVal = gridValues.getValue(new Position(i, j));
+				
+				System.out.printf(" " + (new Integer(gridVal.listIndex)).toString() + " " + gridVal.weaponType);
+				
+			}
+			System.out.printf("\n");
 		}
 		
 	}

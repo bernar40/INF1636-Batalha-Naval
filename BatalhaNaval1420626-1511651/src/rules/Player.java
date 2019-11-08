@@ -47,13 +47,8 @@ public class Player {
 		
 		for(Position p: weaponBlocks) 
 		{
-			if (!(p.getX() > 14 || p.getY() > 14)) {
-				if(ownWeaponsView.getValue(p).listIndex != -1) {
-					// there is already a weapon there!
-					return false;
-				}
-			}
-			else
+			if(ownWeaponsView.isOutsideOfGrid(p) ||  ownWeaponsView.getValue(p).listIndex != -1) {
+				// there is already a weapon there or cant place it
 				return false;
 		}
 		
@@ -106,5 +101,6 @@ public class Player {
 			}
 			
 		}
+		currentWeaponQty--;
 	}
 }

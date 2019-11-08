@@ -69,10 +69,8 @@ public class weaponGraphics{
 				return Color.red;
 				
 			default:
-				break;
+				return Color.white;				
 		}
-		
-		return null;
 	}
 	
 	public Weapon getWeapon() {

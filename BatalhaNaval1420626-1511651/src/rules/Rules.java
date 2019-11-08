@@ -87,4 +87,19 @@ public class Rules {
 				return null;
 		}
 	}
+	
+	public WeaponType removeWeaponInCurrentPlayerGrid(Position p) 
+	{
+		switch (playerTurn) 
+		{
+			case PLAYER1:
+				return player1.removeWeaponFromGrid(p);
+				
+			case PLAYER2:
+				return player2.removeWeaponFromGrid(p);
+				
+			default:
+				return null;
+		}
+	}
 }
