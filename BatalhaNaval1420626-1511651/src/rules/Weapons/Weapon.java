@@ -91,7 +91,7 @@ public class Weapon {
 		return angle;
 	}
 	
-	public void set_angle(int angle, WeaponType type) {
+	public void rotate() {
 		if (type == WeaponType.DESTROYER) {
 			if (angle == 0) {
 				weaponPositions.add(new Position(0,0));

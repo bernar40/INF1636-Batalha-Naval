@@ -126,10 +126,10 @@ public class GridGraphics {
 			for(int j=0;j<15;j++) {
 				GridValue gridVal = gridValues.getValue(new Position(i, j));
 				
-				System.out.printf(" " + (new Integer(gridVal.listIndex)).toString() + " " + gridVal.weaponType);
+//				System.out.printf(" " + (new Integer(gridVal.listIndex)).toString() + " " + gridVal.weaponType);
 				
 			}
-			System.out.printf("\n");
+//			System.out.printf("\n");
 		}
 		
 	}

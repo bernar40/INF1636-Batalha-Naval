@@ -18,6 +18,7 @@ public class MainGamePanel extends JPanel implements MouseListener{
 	private static final long serialVersionUID = 1L;
 	private weaponGraphics selectedWeapon = null;
 	private Rules rules = new Rules("victor", "bernardo");
+
 	
 	
 	public MainGamePanel(Position iniPos, Position finalPos) {
@@ -53,81 +54,86 @@ public class MainGamePanel extends JPanel implements MouseListener{
 	}
 	
 	public void mouseClicked(MouseEvent e) {
-		int x=e.getX(),y=e.getY();
-		
-		if(selectedWeapon == null) 
-		{
-			Boolean weaponWasSelected = false;
-			for(weaponGraphics w :weaponList) 
-			{
-				if(w.wasItClicked(new Position (x, y))) 
-				{
-					selectedWeapon = w;
-					weaponWasSelected = true;
-				}
-			}
-						
-			System.out.printf("Selected a " + selectedWeapon + "\n");
+			int x=e.getX(),y=e.getY();
 			
-			if(!weaponWasSelected) {
-				if(x > iniPos.getX() && x < finalPos.getX()) {
-					if(y > iniPos.getY() && y < finalPos.getY()) {
+			Weapon newWeapon = null;
+
 						
-						x-=iniPos.getX();
-						y-=iniPos.getY();
-						
-						int j = x/30;
-						int i = y/30;
-						
-						WeaponType wt = rules.removeWeaponInCurrentPlayerGrid(new Position(i,j));
-						
-						//Find weapon in addedWeaponsList
-						if(wt != null) 
+			if (selectedWeapon == null) {
+				for(weaponGraphics w :weaponList)
+					if(w.wasItClicked(new Position (x, y)))
+						selectedWeapon = w;
+				newWeapon = new Weapon(selectedWeapon.getWeapon().getType());
+				System.out.printf("Selected a " + selectedWeapon.getWeapon().getType() + "\n");
+			}
+			
+			if(x > iniPos.getX() && x < finalPos.getX()) {
+				if(y > iniPos.getY() && y < finalPos.getY()) {
+					
+					x-=iniPos.getX();
+					y-=iniPos.getY();
+					
+					int j = x/30;
+					int i = y/30;
+					
+					WeaponType wt = rules.removeWeaponInCurrentPlayerGrid(new Position(i,j));
+					
+					//Find weapon in addedWeaponsList
+					if(wt != null) 
+					{
+						for(weaponGraphics w: addedWeaponList) 
 						{
-							for(weaponGraphics w: addedWeaponList) 
+							if(w.getWeapon().getType() == wt) 
 							{
-								if(w.getWeapon().getType() == wt) 
-								{
-									System.out.println("Found a " + w.getWeapon().getType());
-									weaponList.add(w);
-									addedWeaponList.remove(w);
-									break;
-								}
+								weaponList.add(w);
+								addedWeaponList.remove(w);
+								break;
 							}
-						}				
-					}
+						}
+					}				
 				}
 			}
-			
-		}
-		else 
-		{
-			if(x < iniPos.getX() || x > finalPos.getX())
-				return;
-			
-			if(y < iniPos.getY() || y > finalPos.getY())
-				return;
-			
-			x-=iniPos.getX();
-			y-=iniPos.getY();
-			
-			int j = x/30;
-			int i = y/30;
-			
-			if(rules.setWeaponInCurrentPlayerGrid(new Weapon(selectedWeapon.getWeapon().getType()), new Position(i,j)))
-			{
-				addedWeaponList.add(selectedWeapon);
-				weaponList.remove(selectedWeapon);				
+				
+			if (SwingUtilities.isRightMouseButton(e)) {
+				if (newWeapon != null)
+					newWeapon.rotate();
+			}
+	
+			if (SwingUtilities.isLeftMouseButton(e)) {
+
+
+				if(x < iniPos.getX() || x > finalPos.getX())
+					return;
+				
+				if(y < iniPos.getY() || y > finalPos.getY())
+					return;
+				
+				x-=iniPos.getX();
+				y-=iniPos.getY();
+				
+				int j = x/30;
+				int i = y/30;
+				if (newWeapon != null)
+					if(rules.setWeaponInCurrentPlayerGrid(newWeapon, new Position(i,j)))
+					{
+						System.out.printf("PO\n");
+						addedWeaponList.add(selectedWeapon);
+						for(weaponGraphics w :weaponList) {
+							if (w.getWeapon().getType() == selectedWeapon.getWeapon().getType()) {
+								weaponList.remove(w);
+								break;
+							}
+						}
+					}			
+					
+					System.out.printf("Clicked %d, %d\n", i, j);
+					selectedWeapon = null;
+				
 			}			
 			
-			System.out.printf("Clicked %d, %d\n", i, j);
-			selectedWeapon = null;
-			
-		}			
-		
-		setupGrid = new GridGraphics (iniPos, finalPos, rules.getCurrentPlayerOwnGrid());
-		setupGrid.buildGrid();
-		paintComponent(getGraphics());
+			setupGrid = new GridGraphics (iniPos, finalPos, rules.getCurrentPlayerOwnGrid());
+			setupGrid.buildGrid();
+			paintComponent(getGraphics());
 	}
 	
 	public void mouseEntered(MouseEvent e) {}
