@@ -50,6 +50,7 @@ public class Player {
 			if(ownWeaponsView.isOutsideOfGrid(p) ||  ownWeaponsView.getValue(p).listIndex != -1) {
 				// there is already a weapon there or cant place it
 				return false;
+			}
 		}
 		
 		//No overlap found, so gridValues can be set now!	

@@ -59,8 +59,9 @@ public class MainGamePanel extends JPanel implements MouseListener{
 		{
 			for(weaponGraphics w :weaponList)
 				if(w.wasItClicked(new Position (x, y)))
-			System.out.printf("Selected a " + selectedWeaponType + "\n");
 					selectedWeapon = w;
+			
+			System.out.printf("Selected a " + selectedWeapon + "\n");
 			
 			if(x > iniPos.getX() && x < finalPos.getX()) {
 				if(y > iniPos.getY() && y < finalPos.getY()) {
@@ -112,15 +113,15 @@ public class MainGamePanel extends JPanel implements MouseListener{
 			
 			System.out.printf("Clicked %d, %d\n", i, j);
 
-			if (rules.setWeaponInCurrentPlayerGrid(new Weapon(selectedWeaponType), new Position(i,j))) {
+			if (rules.setWeaponInCurrentPlayerGrid(new Weapon(selectedWeapon.getWeapon().getType()), new Position(i,j))) {
 				for(weaponGraphics w :weaponList) {
-					if (w.getWeapon().getType() == selectedWeaponType) {
+					if (w.getWeapon().getType() == selectedWeapon.getWeapon().getType()) {
 						weaponList.remove(w);
 						break;
 					}
 				}
 			}
-			selectedWeaponType = null;
+			selectedWeapon = null;
 			
 		}			
 		
