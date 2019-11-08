@@ -77,7 +77,7 @@ public class GridGraphics {
 	}
 	
 	public void paintGrid(Graphics g) {
-		printGrid();
+		//printGrid();
 		Graphics2D g2d=(Graphics2D) g;
 		
 		g2d.setStroke(new BasicStroke(espLinha,

@@ -57,39 +57,47 @@ public class MainGamePanel extends JPanel implements MouseListener{
 		
 		if(selectedWeapon == null) 
 		{
-			for(weaponGraphics w :weaponList)
-				if(w.wasItClicked(new Position (x, y)))
+			Boolean weaponWasSelected = false;
+			for(weaponGraphics w :weaponList) 
+			{
+				if(w.wasItClicked(new Position (x, y))) 
+				{
 					selectedWeapon = w;
-			
-			System.out.printf("Selected a " + selectedWeapon + "\n");
-			
-			if(x > iniPos.getX() && x < finalPos.getX()) {
-				if(y > iniPos.getY() && y < finalPos.getY()) {
-					
-					x-=iniPos.getX();
-					y-=iniPos.getY();
-					
-					int j = x/30;
-					int i = y/30;
-					
-					WeaponType wt = rules.removeWeaponInCurrentPlayerGrid(new Position(i,j));
-					
-					//Find weapon in addedWeaponsList
-					if(wt != null) 
-					{
-						for(weaponGraphics w: addedWeaponList) 
-						{
-							if(w.getWeapon().getType() == wt) 
-							{
-								weaponList.add(w);
-								addedWeaponList.remove(w);
-								break;
-							}
-						}
-					}				
+					weaponWasSelected = true;
 				}
 			}
-
+						
+			System.out.printf("Selected a " + selectedWeapon + "\n");
+			
+			if(!weaponWasSelected) {
+				if(x > iniPos.getX() && x < finalPos.getX()) {
+					if(y > iniPos.getY() && y < finalPos.getY()) {
+						
+						x-=iniPos.getX();
+						y-=iniPos.getY();
+						
+						int j = x/30;
+						int i = y/30;
+						
+						WeaponType wt = rules.removeWeaponInCurrentPlayerGrid(new Position(i,j));
+						
+						//Find weapon in addedWeaponsList
+						if(wt != null) 
+						{
+							for(weaponGraphics w: addedWeaponList) 
+							{
+								if(w.getWeapon().getType() == wt) 
+								{
+									System.out.println("Found a " + w.getWeapon().getType());
+									weaponList.add(w);
+									addedWeaponList.remove(w);
+									break;
+								}
+							}
+						}				
+					}
+				}
+			}
 			
 		}
 		else 
@@ -109,12 +117,7 @@ public class MainGamePanel extends JPanel implements MouseListener{
 			if(rules.setWeaponInCurrentPlayerGrid(new Weapon(selectedWeapon.getWeapon().getType()), new Position(i,j)))
 			{
 				addedWeaponList.add(selectedWeapon);
-				for(weaponGraphics w :weaponList) {
-					if (w.getWeapon().getType() == selectedWeapon.getWeapon().getType()) {
-						weaponList.remove(w);
-						break;
-					}
-				}
+				weaponList.remove(selectedWeapon);				
 			}			
 			
 			System.out.printf("Clicked %d, %d\n", i, j);
