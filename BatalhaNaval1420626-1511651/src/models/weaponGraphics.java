@@ -75,4 +75,8 @@ public class weaponGraphics{
 		return null;
 	}
 	
+	public Weapon getWeapon() {
+		return weapon;
+	}
+	
 }

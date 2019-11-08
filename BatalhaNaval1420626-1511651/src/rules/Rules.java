@@ -28,7 +28,7 @@ public class Rules {
 		}
 	}
 	
-	public static Grid getCurrentPlayerOwnGrid() 
+	public Grid getCurrentPlayerOwnGrid() 
 	{
 		switch (playerTurn) 
 		{
@@ -73,7 +73,7 @@ public class Rules {
 		}
 	}
 	
-	public static Boolean setWeaponInCurrentPlayerGrid(Weapon weapon, Position upperLeftCorner) 
+	public Boolean setWeaponInCurrentPlayerGrid(Weapon weapon, Position upperLeftCorner) 
 	{
 		switch (playerTurn) 
 		{

@@ -99,7 +99,7 @@ public class GridGraphics {
 				}
 			}
 		}
-		g.setColor(Color.black);
+		g2d.setColor(Color.black);
 		for(int i=0;i<=15;i++) {
 			double x1 = skipX*(i+1)+(iniX-skipX);
 			if (i<15)

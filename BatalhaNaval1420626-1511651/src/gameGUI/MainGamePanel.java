@@ -4,10 +4,10 @@ import javax.swing.*;
 import models.*;
 import rules.*;
 import rules.Weapons.*;
-import models.GridGraphics;
-import java.awt.geom.*;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class MainGamePanel extends JPanel implements MouseListener{
 	public weaponGraphics submarino1;
@@ -25,27 +25,14 @@ public class MainGamePanel extends JPanel implements MouseListener{
 	public weaponGraphics hidroaviao4;
 	public weaponGraphics hidroaviao5;
 	public weaponGraphics couracado;
+	public ArrayList<weaponGraphics> weaponList;
 	public GridGraphics setupGrid;
 	public Position iniPos;
 	public Position finalPos;
-	public Position sub1UpperLeftCorner = new Position (100, 100);
-	public Position sub2UpperLeftCorner = new Position (150, 100);
-	public Position sub3UpperLeftCorner = new Position (200, 100);
-	public Position sub4UpperLeftCorner = new Position (250, 100);
-	public Position destroyer1UpperLeftCorner = new Position (100, 150);
-	public Position destroyer2UpperLeftCorner = new Position (200, 150);
-	public Position destroyer3UpperLeftCorner = new Position (300, 150);
-	public Position cruzador1UpperLeftCorner = new Position (100, 200);
-	public Position cruzador2UpperLeftCorner = new Position (250, 200);
-	public Position hidroaviao1UpperLeftCorner = new Position (100, 250);
-	public Position hidroaviao2UpperLeftCorner = new Position (200, 250);
-	public Position hidroaviao3UpperLeftCorner = new Position (300, 250);
-	public Position hidroaviao4UpperLeftCorner = new Position (400, 250);
-	public Position hidroaviao5UpperLeftCorner = new Position (500, 250);
-	public Position couracadoUpperLeftCorner = new Position (100, 350);
 	private static final long serialVersionUID = 1L;
 	private WeaponType selectedWeaponType = WeaponType.SUBMARINO;
 	private Rules rules = new Rules("victor", "bernardo");
+	
 	
 	public MainGamePanel(Position iniPos, Position finalPos) {
 		this.iniPos = iniPos;
@@ -53,41 +40,29 @@ public class MainGamePanel extends JPanel implements MouseListener{
 		setupGrid = new GridGraphics (iniPos, finalPos, rules.getCurrentPlayerOwnGrid());
 		addMouseListener(this);
 		setupGrid.buildGrid();
-		submarino1 = new weaponGraphics (WeaponType.SUBMARINO, sub1UpperLeftCorner, 30, Color.red);
-		submarino2 = new weaponGraphics (WeaponType.SUBMARINO, sub2UpperLeftCorner, 30, Color.red);
-		submarino3 = new weaponGraphics (WeaponType.SUBMARINO, sub3UpperLeftCorner, 30, Color.red);
-		submarino4 = new weaponGraphics (WeaponType.SUBMARINO, sub4UpperLeftCorner, 30, Color.red);
-		destroyer1 = new weaponGraphics (WeaponType.DESTROYER, destroyer1UpperLeftCorner, 30, Color.blue);
-		destroyer2 = new weaponGraphics (WeaponType.DESTROYER, destroyer2UpperLeftCorner, 30, Color.blue);
-		destroyer3 = new weaponGraphics (WeaponType.DESTROYER, destroyer3UpperLeftCorner, 30, Color.blue);
-		cruzador1 = new weaponGraphics (WeaponType.CRUZADOR, cruzador1UpperLeftCorner, 30, Color.green);
-		cruzador2 = new weaponGraphics (WeaponType.CRUZADOR, cruzador2UpperLeftCorner, 30, Color.green);
-		hidroaviao1 = new weaponGraphics (WeaponType.HIDROAVIAO, hidroaviao1UpperLeftCorner, 30, Color.yellow);
-		hidroaviao2 = new weaponGraphics (WeaponType.HIDROAVIAO, hidroaviao2UpperLeftCorner, 30, Color.yellow);
-		hidroaviao3 = new weaponGraphics (WeaponType.HIDROAVIAO, hidroaviao3UpperLeftCorner, 30, Color.yellow);
-		hidroaviao4 = new weaponGraphics (WeaponType.HIDROAVIAO, hidroaviao4UpperLeftCorner, 30, Color.yellow);
-		hidroaviao5 = new weaponGraphics (WeaponType.HIDROAVIAO, hidroaviao5UpperLeftCorner, 30, Color.yellow);
-		couracado = new weaponGraphics (WeaponType.COURACADO, couracadoUpperLeftCorner, 30, Color.black);
+		weaponList =  new ArrayList<weaponGraphics>();
+		weaponList.add(new weaponGraphics (WeaponType.SUBMARINO, new Position(100, 100), 30, Color.red));
+		weaponList.add(new weaponGraphics (WeaponType.SUBMARINO, new Position(150, 100), 30, Color.red));
+		weaponList.add(new weaponGraphics (WeaponType.SUBMARINO, new Position(200, 100), 30, Color.red));
+		weaponList.add(new weaponGraphics (WeaponType.SUBMARINO, new Position(250, 100), 30, Color.red));
+		weaponList.add(new weaponGraphics (WeaponType.DESTROYER, new Position(100, 150), 30, Color.blue));
+		weaponList.add(new weaponGraphics (WeaponType.DESTROYER, new Position(200, 150), 30, Color.blue));
+		weaponList.add(new weaponGraphics (WeaponType.DESTROYER, new Position(300, 150), 30, Color.blue));
+		weaponList.add(new weaponGraphics (WeaponType.CRUZADOR, new Position(100, 200), 30, Color.green));
+		weaponList.add(new weaponGraphics (WeaponType.CRUZADOR, new Position(250, 200), 30, Color.green));
+		weaponList.add(new weaponGraphics (WeaponType.HIDROAVIAO, new Position(100, 250), 30, Color.yellow));
+		weaponList.add(new weaponGraphics (WeaponType.HIDROAVIAO, new Position(200, 250), 30, Color.yellow));
+		weaponList.add(new weaponGraphics (WeaponType.HIDROAVIAO, new Position(300, 250), 30, Color.yellow));
+		weaponList.add(new weaponGraphics (WeaponType.HIDROAVIAO, new Position(400, 250), 30, Color.yellow));
+		weaponList.add(new weaponGraphics (WeaponType.HIDROAVIAO, new Position(500, 250), 30, Color.yellow));
+		weaponList.add(new weaponGraphics (WeaponType.COURACADO, new Position(100, 350), 30, Color.black));
 	}
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		setupGrid.paintGrid(g);	
-		submarino1.paint(g);
-		submarino2.paint(g);
-		submarino3.paint(g);
-		submarino4.paint(g);
-		destroyer1.paint(g);
-		destroyer2.paint(g);
-		destroyer3.paint(g);
-		cruzador1.paint(g);
-		cruzador2.paint(g);
-		hidroaviao1.paint(g);
-		hidroaviao2.paint(g);
-		hidroaviao3.paint(g);
-		hidroaviao4.paint(g);
-		hidroaviao5.paint(g);
-		couracado.paint(g);
+		setupGrid.paintGrid(g);
+		for (weaponGraphics w : weaponList)
+			w.paint(g);
 	}
 	
 	public void mouseClicked(MouseEvent e) {
@@ -95,46 +70,10 @@ public class MainGamePanel extends JPanel implements MouseListener{
 		
 		if(selectedWeaponType == null) 
 		{
-			if (submarino1.wasItClicked(new Position (x, y)))
-				selectedWeaponType = WeaponType.SUBMARINO;
-				// do something
-			if (submarino2.wasItClicked(new Position (x, y)))
-				selectedWeaponType = WeaponType.SUBMARINO;
-				// do something
-			if (submarino3.wasItClicked(new Position (x, y)))
-				selectedWeaponType = WeaponType.SUBMARINO;
-				// do something
-			if (submarino4.wasItClicked(new Position (x, y)))
-				selectedWeaponType = WeaponType.SUBMARINO;
-				// do something
-			if (destroyer1.wasItClicked(new Position (x, y)))
-				selectedWeaponType = WeaponType.DESTROYER;
-				// do something
-			if (destroyer2.wasItClicked(new Position (x, y)))
-				selectedWeaponType = WeaponType.DESTROYER;
-				// do something
-			if (destroyer3.wasItClicked(new Position (x, y)))
-				selectedWeaponType = WeaponType.DESTROYER;
-				// do something
-			if (cruzador1.wasItClicked(new Position (x, y)))
-				// do something
-			if (cruzador2.wasItClicked(new Position (x, y)))
-				// do something			
-			if (hidroaviao1.wasItClicked(new Position (x, y)))
-				// do something		
-			if (hidroaviao2.wasItClicked(new Position (x, y)))
-				// do something	
-			if (hidroaviao3.wasItClicked(new Position (x, y)))
-				// do something	
-			if (hidroaviao4.wasItClicked(new Position (x, y)))
-				// do something
-			if (hidroaviao5.wasItClicked(new Position (x, y)))
-				// do something	
-			if (couracado.wasItClicked(new Position (x, y)))
-				selectedWeaponType = WeaponType.COURACADO;
-				// do something	
-			
-			System.out.printf("Selected a ", selectedWeaponType);
+			for(weaponGraphics w :weaponList)
+				if(w.wasItClicked(new Position (x, y)))
+					selectedWeaponType = w.getWeapon().getType();
+			System.out.printf("Selected a " + selectedWeaponType);
 		}
 		else 
 		{
@@ -153,9 +92,12 @@ public class MainGamePanel extends JPanel implements MouseListener{
 			rules.setWeaponInCurrentPlayerGrid(new Weapon(selectedWeaponType), new Position(i,j));
 			
 			System.out.printf("Clicked %d, %d\n", i, j);
+			selectedWeaponType = null;
+			
 		}			
 		
-		setupGrid = new GridGraphics (iniPos, finalPos, Rules.getCurrentPlayerOwnGrid());
+		setupGrid = new GridGraphics (iniPos, finalPos, rules.getCurrentPlayerOwnGrid());
+		setupGrid.buildGrid();
 		paintComponent(getGraphics());
 	}
 	

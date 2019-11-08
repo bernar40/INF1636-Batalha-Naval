@@ -80,4 +80,8 @@ public class Weapon {
 		
 		return returningPositions;
 	}
+	
+	public WeaponType getType() {
+		return type;
+	}
 }
