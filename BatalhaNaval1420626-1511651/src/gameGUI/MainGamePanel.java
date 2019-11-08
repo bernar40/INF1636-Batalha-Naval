@@ -10,21 +10,6 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class MainGamePanel extends JPanel implements MouseListener{
-	public weaponGraphics submarino1;
-	public weaponGraphics submarino2;
-	public weaponGraphics submarino3;
-	public weaponGraphics submarino4;
-	public weaponGraphics destroyer1;
-	public weaponGraphics destroyer2;
-	public weaponGraphics destroyer3;
-	public weaponGraphics cruzador1;
-	public weaponGraphics cruzador2;
-	public weaponGraphics hidroaviao1;
-	public weaponGraphics hidroaviao2;
-	public weaponGraphics hidroaviao3;
-	public weaponGraphics hidroaviao4;
-	public weaponGraphics hidroaviao5;
-	public weaponGraphics couracado;
 	public ArrayList<weaponGraphics> weaponList;
 	public GridGraphics setupGrid;
 	public Position iniPos;
@@ -73,7 +58,7 @@ public class MainGamePanel extends JPanel implements MouseListener{
 			for(weaponGraphics w :weaponList)
 				if(w.wasItClicked(new Position (x, y)))
 					selectedWeaponType = w.getWeapon().getType();
-			System.out.printf("Selected a " + selectedWeaponType);
+			System.out.printf("Selected a " + selectedWeaponType + "\n");
 		}
 		else 
 		{
@@ -89,15 +74,22 @@ public class MainGamePanel extends JPanel implements MouseListener{
 			int j = x/30;
 			int i = y/30;
 			
-			rules.setWeaponInCurrentPlayerGrid(new Weapon(selectedWeaponType), new Position(i,j));			
-			selectedWeaponType = null;
-			
 			System.out.printf("Clicked %d, %d\n", i, j);
+
+			if (rules.setWeaponInCurrentPlayerGrid(new Weapon(selectedWeaponType), new Position(i,j))) {
+				for(weaponGraphics w :weaponList) {
+					if (w.getWeapon().getType() == selectedWeaponType) {
+						weaponList.remove(w);
+						break;
+					}
+				}
+			}
 			selectedWeaponType = null;
 			
 		}			
 		
-		setupGrid = new GridGraphics (iniPos, finalPos, Rules.getCurrentPlayerOwnGrid());
+		setupGrid = new GridGraphics (iniPos, finalPos, rules.getCurrentPlayerOwnGrid());
+		setupGrid.buildGrid();
 		paintComponent(getGraphics());
 	}
 	

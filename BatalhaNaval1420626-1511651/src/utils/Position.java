@@ -9,7 +9,7 @@ public class Position {
 	}
 	
 	public static Position scalar(Position pos1, int scalar) {
-		return new Position(pos1.getX()* scalar, pos1.getY() * scalar);
+		return new Position(pos1.getY()* scalar, pos1.getX() * scalar);
 	}
 	
 	

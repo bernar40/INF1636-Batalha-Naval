@@ -47,10 +47,14 @@ public class Player {
 		
 		for(Position p: weaponBlocks) 
 		{
-			if(ownWeaponsView.getValue(p).listIndex != -1) {
-				// there is already a weapon there!
-				return false;
+			if (!(p.getX() > 14 || p.getY() > 14)) {
+				if(ownWeaponsView.getValue(p).listIndex != -1) {
+					// there is already a weapon there!
+					return false;
+				}
 			}
+			else
+				return false;
 		}
 		
 		//No overlap found, so gridValues can be set now!	

@@ -25,34 +25,34 @@ public class Weapon {
 				weaponHealth = 5;
 				
 				weaponPositions.add(new Position(0,0));
-				weaponPositions.add(new Position(1,0));
-				weaponPositions.add(new Position(2,0));
-				weaponPositions.add(new Position(3,0));
-				weaponPositions.add(new Position(4,0));
+				weaponPositions.add(new Position(0,1));
+				weaponPositions.add(new Position(0,2));
+				weaponPositions.add(new Position(0,3));
+				weaponPositions.add(new Position(0,4));
 				break;
 				
 			case CRUZADOR:
 				weaponHealth = 4;
 				
 				weaponPositions.add(new Position(0,0));
-				weaponPositions.add(new Position(1,0));
-				weaponPositions.add(new Position(2,0));
-				weaponPositions.add(new Position(3,0));
+				weaponPositions.add(new Position(0,1));
+				weaponPositions.add(new Position(0,2));
+				weaponPositions.add(new Position(0,3));
 				break;
 				
 			case DESTROYER:
 				weaponHealth = 2;
 				
 				weaponPositions.add(new Position(0,0));
-				weaponPositions.add(new Position(1,0));
+				weaponPositions.add(new Position(0,1));
 				break;
 				
 			case HIDROAVIAO:
 				weaponHealth = 3;
 				
-				weaponPositions.add(new Position(1,0));
 				weaponPositions.add(new Position(0,1));
-				weaponPositions.add(new Position(2,1));
+				weaponPositions.add(new Position(1,0));
+				weaponPositions.add(new Position(1,2));
 				break;
 				
 			case SUBMARINO:
