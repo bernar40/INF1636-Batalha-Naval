@@ -18,7 +18,52 @@ public class Weapon {
 	ArrayList<Position> weaponPositions = new ArrayList<Position>();
 	
 	public Weapon(WeaponType Wtype) {
+			
+		type = Wtype;
+		switch(Wtype) {
+			case COURACADO:
+				weaponHealth = 5;
+				
+				weaponPositions.add(new Position(0,0));
+				weaponPositions.add(new Position(0,1));
+				weaponPositions.add(new Position(0,2));
+				weaponPositions.add(new Position(0,3));
+				weaponPositions.add(new Position(0,4));
+				break;
+				
+			case CRUZADOR:
+				weaponHealth = 4;
+				
+				weaponPositions.add(new Position(0,0));
+				weaponPositions.add(new Position(0,1));
+				weaponPositions.add(new Position(0,2));
+				weaponPositions.add(new Position(0,3));
+				break;
+				
+			case DESTROYER:
+				weaponHealth = 2;
+				
+				weaponPositions.add(new Position(0,0));
+				weaponPositions.add(new Position(0,1));
+				break;
+				
+			case HIDROAVIAO:
+				weaponHealth = 3;
+				
+				weaponPositions.add(new Position(0,1));
+				weaponPositions.add(new Position(1,0));
+				weaponPositions.add(new Position(1,2));
+				break;
+				
+			case SUBMARINO:
+				weaponHealth = 1;
+				
+				weaponPositions.add(new Position(0,0));
+				break;
+		}
+	}
 		
+	public Weapon(WeaponType Wtype, WeaponRotation rotation) {
 		
 		type = Wtype;
 		switch(Wtype) {
@@ -62,6 +107,40 @@ public class Weapon {
 				weaponPositions.add(new Position(0,0));
 				break;
 		}
+		
+		ArrayList<Position> rotatedWeaponPositions = new ArrayList<Position>();
+		
+		switch(rotation) {
+			case ZERO:
+				break;
+				
+			case NINETY:					
+				for(Position p : weaponPositions ) 
+				{
+					rotatedWeaponPositions.add(new Position(-1 * p.getY(), -1 * p.getX()));
+				}
+				weaponPositions = rotatedWeaponPositions;
+				break;
+			
+			case ONEEIGHTY:					
+				for(Position p : weaponPositions ) 
+				{
+					rotatedWeaponPositions.add(new Position(-1 * p.getX(), -1* p.getY()));
+				}
+				weaponPositions = rotatedWeaponPositions;
+				break;
+				
+			case TWOSEVENTY:					
+				for(Position p : weaponPositions ) 
+				{
+					rotatedWeaponPositions.add(new Position(p.getY(), p.getX()));
+				}
+				weaponPositions = rotatedWeaponPositions;
+				break;
+			default:
+				break;
+		}
+			
 	}
 	
 	public Boolean weaponWasHit() {

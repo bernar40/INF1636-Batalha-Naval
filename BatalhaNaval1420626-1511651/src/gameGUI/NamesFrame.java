@@ -5,7 +5,9 @@ import java.awt.event.*;
 
 public class NamesFrame extends JFrame{
 	
-	public NamesFrame(int wid, int hei, ActionListener e) {
+	private NamesPanel np;
+	
+	public NamesFrame(int wid, int hei) {
 		Toolkit tk=Toolkit.getDefaultToolkit();
 		Dimension screenSize=tk.getScreenSize();
 		int sl=screenSize.width;
@@ -14,7 +16,22 @@ public class NamesFrame extends JFrame{
 		int y=sa/2-hei/2;
 		setBounds(x,y,wid,hei);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		getContentPane().add(new NamesPanel(e));
+		np = new NamesPanel();
+		getContentPane().add(np);
 		setTitle("Batalha Naval");
+	}
+	
+	public void dispose() {
+		getTextBox1();
+		getTextBox2();
+		super.dispose();	
+	}
+	
+	public void getTextBox1() {
+		np.getTextField1();
+	}
+	
+	public void getTextBox2() {
+		np.getTextField2();
 	}
 }

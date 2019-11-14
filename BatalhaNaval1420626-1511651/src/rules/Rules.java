@@ -6,11 +6,28 @@ public class Rules {
 
 	static Turn playerTurn = Turn.PLAYER1;
 	static Player player1, player2;
+	static String namePlayer1, namePlayer2;
+	public static Rules instance;
 	
-	public Rules(String namePlayer1, String namePlayer2) 
+	private Rules(String namePlayer1, String namePlayer2) 
 	{
-		player1 = new Player(namePlayer1);
-		player2 = new Player(namePlayer2);
+		player1 = new Player();
+		player2 = new Player();
+	}
+	
+	public static Rules getInstance() {
+		if(instance == null)
+			instance = new Rules(namePlayer1, namePlayer2);
+		
+		return instance;
+	}
+	
+	public void setPlayer1Name(String name) {
+		player1.setName(name);
+	}
+	
+	public void setPlayer2Name(String name) {
+		player2.setName(name);
 	}
 	
 	public static String getCurrentPlayerName() 
@@ -100,6 +117,23 @@ public class Rules {
 				
 			default:
 				return null;
+		}
+	}
+	
+	public void changeTurn() 
+	{
+		switch (playerTurn) 
+		{
+			case PLAYER1:
+				playerTurn = Turn.PLAYER2;
+				break;
+				
+			case PLAYER2:
+				playerTurn = Turn.PLAYER1;
+				break;
+				
+			default:
+				break;				
 		}
 	}
 }

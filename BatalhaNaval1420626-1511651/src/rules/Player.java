@@ -15,8 +15,7 @@ public class Player {
 	private ArrayList<Weapon> 	enemyWeapons;
 	private int currentWeaponQty;
 	
-	public Player(String name) {
-		playerName 			= name;
+	public Player() {
 		aliveWeapons 		= 15;
 		currentWeaponQty 	= 0;
 		
@@ -31,6 +30,10 @@ public class Player {
 	
 	public String getName() {
 		return playerName;
+	}
+	
+	public void setName(String name) {
+		playerName = name;
 	}
 	
 	public Grid getOwnGrid() {
