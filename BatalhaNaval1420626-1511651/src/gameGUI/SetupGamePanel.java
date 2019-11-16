@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class MainGamePanel extends JPanel implements MouseListener{
+public class SetupGamePanel extends JPanel implements MouseListener{
 	public ArrayList<weaponGraphics> weaponList;
 	public ArrayList<weaponGraphics> addedWeaponList;
 	public GridGraphics setupGrid;
@@ -23,11 +23,11 @@ public class MainGamePanel extends JPanel implements MouseListener{
 	private JButton confirmButton;
 	
 	
-	public MainGamePanel(Position iniPos, Position finalPos) {
+	public SetupGamePanel(Position iniPos, Position finalPos) {
 		this.iniPos = iniPos;
 		this.finalPos = finalPos;
 		rules = Rules.getInstance();
-		setupGrid = new GridGraphics (iniPos, finalPos, rules.getCurrentPlayerOwnGrid());
+		setupGrid = new GridGraphics (iniPos, finalPos, rules.getInstance().getCurrentPlayerOwnGrid());
 		addMouseListener(this);
 		setupGrid.buildGrid();
 		weaponList =  new ArrayList<weaponGraphics>();
@@ -67,7 +67,7 @@ public class MainGamePanel extends JPanel implements MouseListener{
 		for (weaponGraphics w : weaponList)
 			w.paint(g);
 		
-		labelName.setText("Sua vez de selecionar a posição de suas armas, " + rules.getCurrentPlayerName());
+		labelName.setText("Sua vez de selecionar a posiï¿½ï¿½o de suas armas, " + rules.getInstance().getCurrentPlayerName());
 		
 		this.add(labelName);
 		this.add(confirmButton);
@@ -108,7 +108,7 @@ public class MainGamePanel extends JPanel implements MouseListener{
 						int j = x/30;
 						int i = y/30;
 						
-						WeaponType wt = rules.removeWeaponInCurrentPlayerGrid(new Position(i,j));
+						WeaponType wt = rules.getInstance().removeWeaponInCurrentPlayerGrid(new Position(i,j));
 						
 						//Find weapon in addedWeaponsList
 						if(wt != null) 
@@ -143,7 +143,7 @@ public class MainGamePanel extends JPanel implements MouseListener{
 			int j = x/30;
 			int i = y/30;
 			
-			if(rules.setWeaponInCurrentPlayerGrid(new Weapon(selectedWeapon.getWeapon().getType(), rotation), new Position(i,j)))
+			if(rules.getInstance().setWeaponInCurrentPlayerGrid(new Weapon(selectedWeapon.getWeapon().getType(), rotation), new Position(i,j)))
 			{
 				addedWeaponList.add(selectedWeapon);
 				weaponList.remove(selectedWeapon);				
@@ -155,7 +155,7 @@ public class MainGamePanel extends JPanel implements MouseListener{
 			
 		}			
 		
-		setupGrid = new GridGraphics (iniPos, finalPos, rules.getCurrentPlayerOwnGrid());
+		setupGrid = new GridGraphics (iniPos, finalPos, rules.getInstance().getCurrentPlayerOwnGrid());
 		setupGrid.buildGrid();
 		paintComponent(getGraphics());
 	}

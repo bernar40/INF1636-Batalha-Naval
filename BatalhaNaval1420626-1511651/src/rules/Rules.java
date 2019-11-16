@@ -5,8 +5,10 @@ import utils.*;
 public class Rules {
 
 	static Turn playerTurn = Turn.PLAYER1;
+	static GameState state = GameState.SETUPPLAYER1;
 	static Player player1, player2;
 	static String namePlayer1, namePlayer2;
+	static String winningPlayerName = "";
 	public static Rules instance;
 	
 	private Rules(String namePlayer1, String namePlayer2) 
@@ -30,7 +32,7 @@ public class Rules {
 		player2.setName(name);
 	}
 	
-	public static String getCurrentPlayerName() 
+	public String getCurrentPlayerName() 
 	{
 		switch (playerTurn) 
 		{
@@ -60,7 +62,7 @@ public class Rules {
 		}
 	}
 	
-	public static Grid getCurrentPlayerEnemyGrid() 
+	public Grid getCurrentPlayerEnemyGrid() 
 	{
 		switch (playerTurn) 
 		{
@@ -75,7 +77,7 @@ public class Rules {
 		}
 	}
 	
-	public static Grid getOppositePlayerOwnGrid() 
+	public Grid getOppositePlayerOwnGrid() 
 	{
 		switch (playerTurn) 
 		{
@@ -120,6 +122,56 @@ public class Rules {
 		}
 	}
 	
+	public Boolean hitWeaponInPositionInGrid(Position p) 
+	{
+		Player currentPlayer;
+		Player oppositePlayer;
+		
+		switch (playerTurn) 
+		{
+			case PLAYER1:
+				currentPlayer = player1;
+				oppositePlayer = player2;
+				break;
+				
+				
+			case PLAYER2:
+				currentPlayer = player2;
+				oppositePlayer = player1;
+				break;
+				
+			default:
+				return false;
+		}
+		
+		// Already hit this position
+		if(currentPlayer.hasAlreadyShotInEnemyGrid(p))
+			return false;
+		
+		int weaponIndex = oppositePlayer.checkForWeaponInPosition(p);
+		
+		// Player missed
+		if(weaponIndex == -1) 
+		{
+			currentPlayer.setMissedValueInEnemyGrid(100, p);
+			oppositePlayer.setMissedValueInOwnGrid(100, p);
+		}
+		else 
+		{
+			currentPlayer.setHitValueInEnemyGrid(weaponIndex, p);
+			oppositePlayer.setHitValueInOwnGrid(weaponIndex, p);
+			currentPlayer.checkForCompletelyDestroyedWeaponInEnemyGrid(weaponIndex);
+			oppositePlayer.checkForCompletelyDestroyedWeaponInOwnGrid(weaponIndex);
+			
+			if(oppositePlayer.checkIfNoWeaponsLeft()) {
+				winningPlayerName = currentPlayer.getName();
+				state = GameState.GAMEFINISHED;
+			}
+		}
+		
+		return true;	
+	}
+	
 	public void changeTurn() 
 	{
 		switch (playerTurn) 
@@ -135,5 +187,33 @@ public class Rules {
 			default:
 				break;				
 		}
+		
+		switch (state) {
+			case SETUPPLAYER1:
+				state = GameState.SETUPPLAYER2;
+				break;
+				
+			case SETUPPLAYER2:
+				state = GameState.ATTACK;
+				break;
+				
+			default:
+				break;
+		}
+	}
+	
+	public Boolean isAttackPhase() 
+	{
+		return state == GameState.ATTACK;
+	}
+	
+	public Boolean isGameOver() 
+	{
+		return state == GameState.GAMEFINISHED;
+	}
+	
+	public Boolean isSetupPhase() 
+	{
+		return state == GameState.SETUPPLAYER1 || state == GameState.SETUPPLAYER2;
 	}
 }

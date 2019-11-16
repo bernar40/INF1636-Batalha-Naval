@@ -4,11 +4,11 @@ import javax.swing.*;
 
 import utils.Position;
 
-public class MainGameFrame extends JFrame {
+public class SetupGameFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	public MainGameFrame(int wid, int hei) {
+	public SetupGameFrame(int wid, int hei) {
 		Toolkit tk=Toolkit.getDefaultToolkit();
 		Dimension screenSize=tk.getScreenSize();
 		int sl=screenSize.width;
@@ -19,7 +19,7 @@ public class MainGameFrame extends JFrame {
 		Position finalPos = new Position (1130, 500);
 		setBounds(x,y,wid,hei);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		getContentPane().add(new MainGamePanel(iniPos, finalPos));
+		getContentPane().add(new SetupGamePanel(iniPos, finalPos));
 		setTitle("Batalha Naval");
 	}
 }

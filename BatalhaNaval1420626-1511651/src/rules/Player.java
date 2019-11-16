@@ -44,6 +44,91 @@ public class Player {
 		return enemyWeaponsView;
 	}
 	
+	public Boolean checkIfNoWeaponsLeft() {
+		return aliveWeapons == 0;
+	}
+	
+	public int checkForWeaponInPosition(Position p)
+	{
+		return ownWeaponsView.getValue(p).listIndex;
+	}
+	
+	public Boolean checkForCompletelyDestroyedWeaponInOwnGrid(int weaponIndx) 
+	{
+		
+		for(int i = 0; i < 15; i++) 
+		{
+			for (int j = 0; j < 15; j++) 
+			{
+				GridValue gridAtIndx = ownWeaponsView.getValue(new Position(i,j));
+				
+				if(gridAtIndx.listIndex == weaponIndx) 
+				{
+					// At least one is still not hit
+					if(gridAtIndx.weaponType != WeaponType.PARTIALLYHIT) 
+					{
+						return false;
+					}
+				}
+			}			
+		}
+		
+		//If here, its completely destroyed, so we should update the values	
+		for(int i = 0; i < 15; i++) 
+		{
+			for (int j = 0; j < 15; j++) 
+			{
+				GridValue gridAtIndx = ownWeaponsView.getValue(new Position(i,j));
+				
+				if(gridAtIndx.listIndex == weaponIndx) 
+				{
+					ownWeaponsView.setValue(new Position(i,j), new GridValue(weaponIndx, WeaponType.COMPLETELYHIT));
+				}
+			}			
+		}
+		
+		aliveWeapons--;
+		
+		return true;
+	}
+	
+	public Boolean checkForCompletelyDestroyedWeaponInEnemyGrid(int weaponIndx) 
+	{
+		
+		for(int i = 0; i < 15; i++) 
+		{
+			for (int j = 0; j < 15; j++) 
+			{
+				GridValue gridAtIndx = enemyWeaponsView.getValue(new Position(i,j));
+				
+				if(gridAtIndx.listIndex == weaponIndx) 
+				{
+					// At least one is still not hit
+					if(gridAtIndx.weaponType != WeaponType.PARTIALLYHIT) 
+					{
+						return false;
+					}
+				}
+			}			
+		}
+		
+		//If here, its completely destroyed, so we should update the values	
+		for(int i = 0; i < 15; i++) 
+		{
+			for (int j = 0; j < 15; j++) 
+			{
+				GridValue gridAtIndx = enemyWeaponsView.getValue(new Position(i,j));
+				
+				if(gridAtIndx.listIndex == weaponIndx) 
+				{
+					enemyWeaponsView.setValue(new Position(i,j), new GridValue(weaponIndx, WeaponType.COMPLETELYHIT));
+				}
+			}			
+		}
+		
+		return true;
+	}
+
 	public Boolean setWeaponInGrid(Weapon weapon, Position upperLeftCorner){
 		
 		ArrayList<Position> weaponBlocks = weapon.placeWeaponInGrid(upperLeftCorner);
@@ -64,6 +149,63 @@ public class Player {
 		
 		ownWeapons.add(weapon);
 		currentWeaponQty++;
+			
+		return true;
+	}
+	
+	public Boolean setHitValueInOwnGrid(int weaponIndx, Position p)
+	{
+		
+		enemyWeaponsView.setValue(p, new GridValue(weaponIndx, WeaponType.PARTIALLYHIT));
+			
+		return true;
+	}
+	
+	public Boolean setMissedValueInOwnGrid(int weaponIndx, Position p)
+	{
+		
+		enemyWeaponsView.setValue(p, new GridValue(weaponIndx, WeaponType.MISSED));
+			
+		return true;
+	}
+	
+	
+	public Boolean setHitValueInEnemyGrid(int weaponIndx, Position p)
+	{
+		
+		enemyWeaponsView.setValue(p, new GridValue(weaponIndx, WeaponType.PARTIALLYHIT));
+			
+		return true;
+	}
+	
+	public Boolean setMissedValueInEnemyGrid(int weaponIndx, Position p)
+	{
+		
+		enemyWeaponsView.setValue(p, new GridValue(weaponIndx, WeaponType.MISSED));
+			
+		return true;
+	}
+	
+	public Boolean hasAlreadyShotInEnemyGrid(Position p)
+	{	
+		return enemyWeaponsView.getValue(p).listIndex > 0;
+	}
+	
+	public Boolean completelyHitWeaponInEnemyGrid(int weaponIndx){
+		
+		for(int i = 0; i < 15; i++) 
+		{
+			for (int j = 0; j < 15; j++) 
+			{
+				// Empty space and subtract 1 from bigger indxs accounting for the shift from the remove
+				GridValue gridAtIndx = ownWeaponsView.getValue(new Position(i,j));
+				
+				if(gridAtIndx.listIndex == weaponIndx)
+				{
+					ownWeaponsView.setValue(new Position(i, j), new GridValue(-1, WeaponType.COMPLETELYHIT));
+				}				
+			}			
+		}
 			
 		return true;
 	}

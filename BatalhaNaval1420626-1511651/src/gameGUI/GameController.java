@@ -42,16 +42,20 @@ public class GameController implements ActionListener{
 		}
 		
 		switch(currentGameState) {
-		case START:
-			currentGameFrame = new NamesFrame (400, 350);
-			break;
-		
-		case SETUP:
-			currentGameFrame = new MainGameFrame(1200, 600);
-			break;
+			case START:
+				currentGameFrame = new NamesFrame (400, 350);
+				break;
 			
-		default:
-			break;
+			case SETUP:
+				currentGameFrame = new SetupGameFrame(1200, 600);
+				break;
+			
+			case PLAYER1ATTACK:
+			case PLAYER2ATTACK:
+				currentGameFrame = new AttackGameFrame (1200, 600);
+				
+			default:
+				break;
 		}
 		
 		currentGameFrame.setVisible(true);
@@ -62,13 +66,22 @@ public class GameController implements ActionListener{
 		String action = e.getActionCommand();
 				
 		// what button was pressed
+		
+		// 
 		if(action.equals("Confirma")) {
 			currentGameState = gameState.SETUP;
-		}
-		
-		if(action.equals("Acabei!")) {
+		}		
+		else if(action.equals("Acabei!")) {
 			Rules.getInstance().changeTurn();
 		}
+		else if(action.equals("Termina a vez")) {
+			Rules.getInstance().changeTurn();
+		}
+		
+		if(rules.getInstance().isAttackPhase()) {
+			switchState();
+		}
+		
 		
 		loadGameState();
 	}
@@ -82,5 +95,23 @@ public class GameController implements ActionListener{
 	{
 		Rules.getInstance().setPlayer2Name(name);
 	}
-
+	
+	private void switchState() 
+	{
+		switch(currentGameState) 
+		{
+			case SETUP:
+			case PLAYER2ATTACK:
+				currentGameState = gameState.PLAYER1ATTACK;
+				break;
+			
+			case PLAYER1ATTACK:
+				currentGameState = gameState.PLAYER2ATTACK;
+				break;
+				
+			default:
+				break;
+			
+		}
+	}
 }
