@@ -28,9 +28,10 @@ public class AttackGamePanel extends JPanel implements MouseListener{
 		this.iniPosRightGrid = iniPosRightGrid;
 		this.finalPosRightGrid = finalPosRightGrid;
 		rules = Rules.getInstance();
-		currentPlayerGrid = new GridGraphics (iniPosLeftGrid, finalPosLeftGrid, rules.getInstance().getCurrentPlayerOwnGrid());
-		oppositePlayerGrid = new GridGraphics (iniPosRightGrid, finalPosRightGrid, rules.getInstance().getCurrentPlayerEnemyGrid());
-		
+		currentPlayerGrid = new GridGraphics (iniPosLeftGrid, finalPosLeftGrid, rules.getCurrentPlayerOwnGrid());
+		oppositePlayerGrid = new GridGraphics (iniPosRightGrid, finalPosRightGrid, rules.getCurrentPlayerEnemyGrid());
+		oppositePlayerGrid.buildGrid();
+		currentPlayerGrid .buildGrid();
 		//enter name label
 		labelName = new JLabel();		
 		labelName.setBounds(400, 500, 200, 100);
@@ -50,7 +51,7 @@ public class AttackGamePanel extends JPanel implements MouseListener{
 		currentPlayerGrid.paintGrid(g);
 		oppositePlayerGrid.paintGrid(g);
 		
-		labelName.setText("Sua vez de selecionar a posiï¿½ï¿½o de suas armas, " + rules.getCurrentPlayerName());
+		labelName.setText("Sua vez de selecionar a posisão de suas armas, " + rules.getCurrentPlayerName());
 		
 		this.add(labelName);
 		this.add(confirmButton);
@@ -74,13 +75,13 @@ public class AttackGamePanel extends JPanel implements MouseListener{
 		int j = x/30;
 		int i = y/30;
 		
-		Rules.getInstance().hitWeaponInPositionInGrid(new Position(i,j));
+		rules.hitWeaponInPositionInGrid(new Position(i,j));
 		
 		System.out.printf("Clicked %d, %d\n", i, j);
 					
 		
-		currentPlayerGrid 	= new GridGraphics (iniPosLeftGrid, finalPosLeftGrid, rules.getInstance().getCurrentPlayerOwnGrid());
-		oppositePlayerGrid 	= new GridGraphics (iniPosRightGrid, finalPosRightGrid, rules.getInstance().getCurrentPlayerEnemyGrid());
+		currentPlayerGrid 	= new GridGraphics (iniPosLeftGrid, finalPosLeftGrid, rules.getCurrentPlayerOwnGrid());
+		oppositePlayerGrid 	= new GridGraphics (iniPosRightGrid, finalPosRightGrid, rules.getCurrentPlayerEnemyGrid());
 		oppositePlayerGrid.buildGrid();
 		currentPlayerGrid .buildGrid();
 		paintComponent(getGraphics()); 
