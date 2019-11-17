@@ -19,7 +19,11 @@ public class SetupGamePanel extends JPanel implements MouseListener{
 	private weaponGraphics selectedWeapon = null;
 	private Rules rules;
 	private Font font = new Font("Serif", Font.PLAIN, 25);
-	private WeaponRotation rotation = WeaponRotation.ZERO;	
+	private WeaponRotation rotation = WeaponRotation.ZERO;
+	private boolean weaponSelectedString = false;
+	private boolean couldNotPlaceWeapon = false;
+	private boolean weaponRemovedFromGrid = false;
+	private weaponGraphics weaponTrial = null;
 	private JButton confirmButton;
 	
 	
@@ -72,6 +76,21 @@ public class SetupGamePanel extends JPanel implements MouseListener{
 		g.setColor(Color.BLACK);
 		g.drawString("Sua vez de selecionar a posição de suas armas, " + rules.getCurrentPlayerName(), 100, 25);
 		
+		if (weaponSelectedString) {
+			g.setFont(new Font("Arial", Font.PLAIN, 25));
+			g.drawString("Selected a " + selectedWeapon.getWeapon().getType() + "\n", 100, 500);
+			g.drawString("Rotation is " + rotation, 100, 540);
+		}
+		if (couldNotPlaceWeapon) {
+			g.setFont(new Font("Arial", Font.BOLD, 25));
+			g.setColor(Color.RED);
+			g.drawString("Could not place " + weaponTrial.getWeapon().getType() + ", try again", 100, 460);
+		}
+		if (weaponRemovedFromGrid) {
+			g.setFont(new Font("Arial", Font.BOLD, 25));
+			g.setColor(Color.MAGENTA);
+			g.drawString(weaponTrial.getWeapon().getType() + " was removed from the Grid!", 100, 460);
+		}
 		confirmButton.setLocation(1050, 520);
 		confirmButton.setBounds(1050, 520, 100, 40);
 		confirmButton.repaint();
@@ -80,8 +99,10 @@ public class SetupGamePanel extends JPanel implements MouseListener{
 	public void mouseClicked(MouseEvent e) {
 		
 		if (SwingUtilities.isRightMouseButton(e)) {
-			if (selectedWeapon != null)
+			if (selectedWeapon != null) {
 				rotation = rotation.nextRotation();
+				paintComponent(getGraphics());
+			}
 			return;
 		}
 		
@@ -95,8 +116,13 @@ public class SetupGamePanel extends JPanel implements MouseListener{
 				if(w.wasItClicked(new Position (x, y))) 
 				{
 					selectedWeapon = w;
-					weaponWasSelected = true;
+					weaponTrial = w;
 					rotation = rotation.initialize();
+					weaponSelectedString = true;
+					couldNotPlaceWeapon = false;
+					weaponWasSelected = true;
+					weaponRemovedFromGrid = false;
+					paintComponent(getGraphics());
 					System.out.printf("Selected a " + selectedWeapon.getWeapon().getType() + "\n");
 				}
 			}
@@ -127,6 +153,8 @@ public class SetupGamePanel extends JPanel implements MouseListener{
 									break;
 								}
 							}
+							weaponRemovedFromGrid = true;
+							paintComponent(getGraphics());
 						}				
 					}
 				}
@@ -149,13 +177,19 @@ public class SetupGamePanel extends JPanel implements MouseListener{
 			if(rules.setWeaponInCurrentPlayerGrid(new Weapon(selectedWeapon.getWeapon().getType(), rotation), new Position(i,j)))
 			{
 				addedWeaponList.add(selectedWeapon);
-				weaponList.remove(selectedWeapon);				
-			}			
+				weaponList.remove(selectedWeapon);	
+				weaponSelectedString = false;
+				couldNotPlaceWeapon = false;
+				paintComponent(getGraphics());
+			}
+			else {
+				couldNotPlaceWeapon = true;
+			}
 			
 			System.out.printf("Clicked %d, %d\n", i, j);
 			System.out.printf("Rotation is %s\n", rotation);
 			selectedWeapon = null;
-			
+			weaponSelectedString = false;
 		}			
 		
 		
