@@ -20,6 +20,7 @@ public class AttackGamePanel extends JPanel implements MouseListener{
 	private Rules rules;
 	private JLabel labelName;
 	private JButton confirmButton;
+	private Boolean alreadyAttacked = false;
 	
 	
 	public AttackGamePanel(Position iniPosLeftGrid,Position finalPosLeftGrid, Position iniPosRightGrid, Position finalPosRightGrid) {
@@ -28,8 +29,8 @@ public class AttackGamePanel extends JPanel implements MouseListener{
 		this.iniPosRightGrid = iniPosRightGrid;
 		this.finalPosRightGrid = finalPosRightGrid;
 		rules = Rules.getInstance();
-		currentPlayerGrid = new GridGraphics (iniPosLeftGrid, finalPosLeftGrid, rules.getCurrentPlayerOwnGrid());
-		oppositePlayerGrid = new GridGraphics (iniPosRightGrid, finalPosRightGrid, rules.getCurrentPlayerEnemyGrid());
+		currentPlayerGrid = new GridGraphics (iniPosLeftGrid, finalPosLeftGrid, rules.getCurrentPlayerGrid());
+		oppositePlayerGrid = new GridGraphics (iniPosRightGrid, finalPosRightGrid, rules.getOppositePlayerGrid());
 		oppositePlayerGrid.buildGrid();
 		currentPlayerGrid .buildGrid();
 		//enter name label
@@ -38,7 +39,7 @@ public class AttackGamePanel extends JPanel implements MouseListener{
 		
 		this.add(labelName);
 		
-		confirmButton = new JButton("Acabei!");
+		confirmButton = new JButton("Termina a vez");
 		confirmButton.setBounds(550, 100, 100, 40);
 		confirmButton.addActionListener(GameController.getInstance());
 		
@@ -48,17 +49,22 @@ public class AttackGamePanel extends JPanel implements MouseListener{
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		currentPlayerGrid.paintGrid(g);
-		oppositePlayerGrid.paintGrid(g);
+		currentPlayerGrid.paintGrid(g, false);
+		oppositePlayerGrid.paintGrid(g, true);
 		
-		labelName.setText("Sua vez de selecionar a posisão de suas armas, " + rules.getCurrentPlayerName());
+		labelName.setText("Sua vez de atacar, " + rules.getCurrentPlayerName());
 		
 		this.add(labelName);
+		
+		if(alreadyAttacked)
+			confirmButton.setVisible(true);
 		this.add(confirmButton);
 	}
 	
 	public void mouseClicked(MouseEvent e) {
 		
+		if(alreadyAttacked)
+			return;
 		
 		int x=e.getX(),y=e.getY();
 			
@@ -75,16 +81,22 @@ public class AttackGamePanel extends JPanel implements MouseListener{
 		int j = x/30;
 		int i = y/30;
 		
-		rules.hitWeaponInPositionInGrid(new Position(i,j));
+		if(rules.hitWeaponInPositionInGrid(new Position(i,j))) {
+			if(rules.isGameOver())
+				GameController.getInstance().endGame(rules.getCurrentPlayerName());
+			
+			System.out.printf("Clicked %d, %d\n", i, j);
+						
+			
+			currentPlayerGrid 	= new GridGraphics (iniPosLeftGrid, finalPosLeftGrid, rules.getCurrentPlayerGrid());
+			oppositePlayerGrid 	= new GridGraphics (iniPosRightGrid, finalPosRightGrid, rules.getOppositePlayerGrid());
+			oppositePlayerGrid.buildGrid();
+			currentPlayerGrid .buildGrid();
+			paintComponent(getGraphics()); 
+			
+			alreadyAttacked = true;
+		}
 		
-		System.out.printf("Clicked %d, %d\n", i, j);
-					
-		
-		currentPlayerGrid 	= new GridGraphics (iniPosLeftGrid, finalPosLeftGrid, rules.getCurrentPlayerOwnGrid());
-		oppositePlayerGrid 	= new GridGraphics (iniPosRightGrid, finalPosRightGrid, rules.getCurrentPlayerEnemyGrid());
-		oppositePlayerGrid.buildGrid();
-		currentPlayerGrid .buildGrid();
-		paintComponent(getGraphics()); 
 	}
 	
 	public void mouseEntered(MouseEvent e) {}

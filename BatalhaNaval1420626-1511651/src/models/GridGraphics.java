@@ -1,5 +1,8 @@
 package models;
 import java.awt.geom.Line2D;
+
+import rules.Weapons.WeaponType;
+
 import java.awt.*;
 import utils.*;
 
@@ -76,7 +79,7 @@ public class GridGraphics {
 		gridValues.setValue(p, new GridValue(gridVal.listIndex + 1, gridVal.weaponType));
 	}
 	
-	public void paintGrid(Graphics g) {
+	public void paintGrid(Graphics g, Boolean hideUncoveredWeapons) {
 		//printGrid();
 		Graphics2D g2d=(Graphics2D) g;
 		
@@ -95,7 +98,17 @@ public class GridGraphics {
 				double leftCornerY = skipY*(i)+iniY;
 				
 				if(gridVal.listIndex > -1) {
-					g.setColor(weaponGraphics.findColorFromWeaponType(gridVal.weaponType));
+					
+					WeaponType wpType = gridVal.weaponType;
+					Color boxColor = weaponGraphics.findColorFromWeaponType(wpType);
+					
+					if(hideUncoveredWeapons) {
+						if(wpType != WeaponType.MISSED && wpType != WeaponType.COMPLETELYHIT && wpType != WeaponType.PARTIALLYHIT) {
+							boxColor = Color.white;
+						}
+					}
+										
+					g.setColor(boxColor);
 					g.fillRect((int)leftCornerX, (int)leftCornerY, 30, 30);
 				}
 				else {

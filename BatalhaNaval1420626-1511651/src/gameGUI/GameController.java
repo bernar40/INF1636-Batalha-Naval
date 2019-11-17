@@ -21,6 +21,7 @@ public class GameController implements ActionListener{
 	public static JFrame    currentGameFrame;
 	public static GameController instance;
 	public static Rules rules;
+	static String winnerName = "TEST";
 	
 	public static GameController getInstance() {
 		
@@ -53,6 +54,11 @@ public class GameController implements ActionListener{
 			case PLAYER1ATTACK:
 			case PLAYER2ATTACK:
 				currentGameFrame = new AttackGameFrame (1200, 600);
+				break;
+				
+			case OVER:
+				currentGameFrame = new GameOverFrame (300, 180, winnerName);
+				break;
 				
 			default:
 				break;
@@ -78,7 +84,7 @@ public class GameController implements ActionListener{
 			Rules.getInstance().changeTurn();
 		}
 		
-		if(rules.getInstance().isAttackPhase()) {
+		if(Rules.getInstance().isAttackPhase()) {
 			switchState();
 		}
 		
@@ -94,6 +100,14 @@ public class GameController implements ActionListener{
 	public void setPlayer2Name(String name) 
 	{
 		Rules.getInstance().setPlayer2Name(name);
+	}
+	
+	public void endGame(String winnersName) 
+	{
+		currentGameState = gameState.OVER;
+		winnerName = winnersName;
+			
+		loadGameState();
 	}
 	
 	private void switchState() 

@@ -27,7 +27,7 @@ public class SetupGamePanel extends JPanel implements MouseListener{
 		this.iniPos = iniPos;
 		this.finalPos = finalPos;
 		rules = Rules.getInstance();
-		setupGrid = new GridGraphics (iniPos, finalPos, rules.getInstance().getCurrentPlayerOwnGrid());
+		setupGrid = new GridGraphics (iniPos, finalPos, rules.getInstance().getCurrentPlayerGrid());
 		addMouseListener(this);
 		setupGrid.buildGrid();
 		weaponList =  new ArrayList<weaponGraphics>();
@@ -63,7 +63,7 @@ public class SetupGamePanel extends JPanel implements MouseListener{
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		setupGrid.paintGrid(g);
+		setupGrid.paintGrid(g, false);
 		for (weaponGraphics w : weaponList)
 			w.paint(g);
 		
@@ -155,7 +155,10 @@ public class SetupGamePanel extends JPanel implements MouseListener{
 			
 		}			
 		
-		setupGrid = new GridGraphics (iniPos, finalPos, rules.getInstance().getCurrentPlayerOwnGrid());
+		if(rules.isCurrentPlayersGridFull())
+			confirmButton.setVisible(true);
+		
+		setupGrid = new GridGraphics (iniPos, finalPos, rules.getInstance().getCurrentPlayerGrid());
 		setupGrid.buildGrid();
 		paintComponent(getGraphics());
 	}

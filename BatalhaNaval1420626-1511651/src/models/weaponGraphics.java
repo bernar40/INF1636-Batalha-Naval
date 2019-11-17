@@ -67,6 +67,15 @@ public class weaponGraphics{
 				
 			case SUBMARINO:
 				return Color.red;
+			
+			case PARTIALLYHIT:
+				return Color.orange;
+				
+			case COMPLETELYHIT:
+				return Color.darkGray;
+				
+			case MISSED:
+				return Color.cyan;
 				
 			default:
 				return Color.white;				

@@ -47,7 +47,22 @@ public class Rules {
 		}
 	}
 	
-	public Grid getCurrentPlayerOwnGrid() 
+	public Boolean isCurrentPlayersGridFull() 
+	{
+		switch (playerTurn) 
+		{
+			case PLAYER1:
+				return player1.isGridFull();
+				
+			case PLAYER2:
+				return player2.isGridFull();
+				
+			default:
+				return false;
+		}
+	}
+	
+	public Grid getCurrentPlayerGrid() 
 	{
 		switch (playerTurn) 
 		{
@@ -62,15 +77,15 @@ public class Rules {
 		}
 	}
 	
-	public Grid getCurrentPlayerEnemyGrid() 
+	public Grid getOppositePlayerGrid() 
 	{
 		switch (playerTurn) 
 		{
 			case PLAYER1:
-				return player1.getEnemyGrid();
+				return player2.getOwnGrid();
 				
 			case PLAYER2:
-				return player2.getEnemyGrid();
+				return player1.getOwnGrid();
 				
 			default:
 				return null;
@@ -145,7 +160,7 @@ public class Rules {
 		}
 		
 		// Already hit this position
-		if(currentPlayer.hasAlreadyShotInEnemyGrid(p))
+		if(oppositePlayer.hasAlreadyBeenShotInGrid(p))
 			return false;
 		
 		int weaponIndex = oppositePlayer.checkForWeaponInPosition(p);
@@ -153,15 +168,14 @@ public class Rules {
 		// Player missed
 		if(weaponIndex == -1) 
 		{
-			currentPlayer.setMissedValueInEnemyGrid(100, p);
 			oppositePlayer.setMissedValueInOwnGrid(100, p);
+			System.out.println("Missed!");
 		}
 		else 
 		{
-			currentPlayer.setHitValueInEnemyGrid(weaponIndex, p);
 			oppositePlayer.setHitValueInOwnGrid(weaponIndex, p);
-			currentPlayer.checkForCompletelyDestroyedWeaponInEnemyGrid(weaponIndex);
 			oppositePlayer.checkForCompletelyDestroyedWeaponInOwnGrid(weaponIndex);
+			System.out.println("HIT!");
 			
 			if(oppositePlayer.checkIfNoWeaponsLeft()) {
 				winningPlayerName = currentPlayer.getName();

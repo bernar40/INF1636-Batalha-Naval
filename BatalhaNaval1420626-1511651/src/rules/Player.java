@@ -48,6 +48,10 @@ public class Player {
 		return aliveWeapons == 0;
 	}
 	
+	public Boolean isGridFull() {
+		return currentWeaponQty == 15;
+	}
+	
 	public int checkForWeaponInPosition(Position p)
 	{
 		return ownWeaponsView.getValue(p).listIndex;
@@ -88,6 +92,8 @@ public class Player {
 		}
 		
 		aliveWeapons--;
+		
+		System.out.println("Weapons left:" + aliveWeapons);
 		
 		return true;
 	}
@@ -156,7 +162,7 @@ public class Player {
 	public Boolean setHitValueInOwnGrid(int weaponIndx, Position p)
 	{
 		
-		enemyWeaponsView.setValue(p, new GridValue(weaponIndx, WeaponType.PARTIALLYHIT));
+		ownWeaponsView.setValue(p, new GridValue(weaponIndx, WeaponType.PARTIALLYHIT));
 			
 		return true;
 	}
@@ -164,7 +170,7 @@ public class Player {
 	public Boolean setMissedValueInOwnGrid(int weaponIndx, Position p)
 	{
 		
-		enemyWeaponsView.setValue(p, new GridValue(weaponIndx, WeaponType.MISSED));
+		ownWeaponsView.setValue(p, new GridValue(weaponIndx, WeaponType.MISSED));
 			
 		return true;
 	}
@@ -186,9 +192,11 @@ public class Player {
 		return true;
 	}
 	
-	public Boolean hasAlreadyShotInEnemyGrid(Position p)
+	public Boolean hasAlreadyBeenShotInGrid(Position p)
 	{	
-		return enemyWeaponsView.getValue(p).listIndex > 0;
+		return  ownWeaponsView.getValue(p).weaponType == WeaponType.MISSED 			||
+				ownWeaponsView.getValue(p).weaponType == WeaponType.PARTIALLYHIT 	||
+				ownWeaponsView.getValue(p).weaponType == WeaponType.COMPLETELYHIT;
 	}
 	
 	public Boolean completelyHitWeaponInEnemyGrid(int weaponIndx){
