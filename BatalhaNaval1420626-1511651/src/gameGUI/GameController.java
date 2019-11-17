@@ -1,10 +1,6 @@
 package gameGUI;
-
-import javax.swing.*;
-
 import rules.Rules;
-
-import java.awt.*;
+import javax.swing.*;
 import java.awt.event.*;
 
 enum gameState {

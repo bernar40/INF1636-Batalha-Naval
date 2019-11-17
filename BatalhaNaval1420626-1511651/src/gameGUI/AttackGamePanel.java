@@ -3,11 +3,8 @@ import utils.*;
 import javax.swing.*;
 import models.*;
 import rules.*;
-import rules.Weapons.*;
-
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 public class AttackGamePanel extends JPanel implements MouseListener{
 	public GridGraphics currentPlayerGrid;
@@ -18,7 +15,7 @@ public class AttackGamePanel extends JPanel implements MouseListener{
 	public Position finalPosRightGrid;
 	private static final long serialVersionUID = 1L;
 	private Rules rules;
-	private JLabel labelName;
+	private Font font = new Font("Serif", Font.PLAIN, 15);
 	private JButton confirmButton;
 	private Boolean alreadyAttacked = false;
 	
@@ -28,23 +25,24 @@ public class AttackGamePanel extends JPanel implements MouseListener{
 		this.finalPosLeftGrid = finalPosLeftGrid;
 		this.iniPosRightGrid = iniPosRightGrid;
 		this.finalPosRightGrid = finalPosRightGrid;
+		
+		addMouseListener(this);
+
 		rules = Rules.getInstance();
+		
 		currentPlayerGrid = new GridGraphics (iniPosLeftGrid, finalPosLeftGrid, rules.getCurrentPlayerGrid());
 		oppositePlayerGrid = new GridGraphics (iniPosRightGrid, finalPosRightGrid, rules.getOppositePlayerGrid());
+		
 		oppositePlayerGrid.buildGrid();
 		currentPlayerGrid .buildGrid();
-		//enter name label
-		labelName = new JLabel();		
-		labelName.setBounds(400, 500, 200, 100);
-		
-		this.add(labelName);
-		
+
 		confirmButton = new JButton("Termina a vez");
-		confirmButton.setBounds(550, 100, 100, 40);
+		confirmButton.setLocation(560, 10);
+		confirmButton.setBounds(560, 10, 100, 20);
 		confirmButton.addActionListener(GameController.getInstance());
-		
+		confirmButton.setVisible(false);
 		this.add(confirmButton);
-		addMouseListener(this);
+		confirmButton.repaint();
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -52,13 +50,14 @@ public class AttackGamePanel extends JPanel implements MouseListener{
 		currentPlayerGrid.paintGrid(g, false);
 		oppositePlayerGrid.paintGrid(g, true);
 		
-		labelName.setText("Sua vez de atacar, " + rules.getCurrentPlayerName());
+		g.setFont(font);
+		g.setColor(Color.BLACK);
+		g.drawString("Sua vez de atacar, " + rules.getCurrentPlayerName(), 350, 25);
 		
-		this.add(labelName);
+		confirmButton.setLocation(560, 10);
+		confirmButton.setBounds(560, 10, 100, 20);
+		confirmButton.repaint();
 		
-		if(alreadyAttacked)
-			confirmButton.setVisible(true);
-		this.add(confirmButton);
 	}
 	
 	public void mouseClicked(MouseEvent e) {
@@ -96,6 +95,12 @@ public class AttackGamePanel extends JPanel implements MouseListener{
 			
 			alreadyAttacked = true;
 		}
+		
+		if(alreadyAttacked)
+			confirmButton.setVisible(true);
+		else
+			confirmButton.setVisible(false);
+		this.add(confirmButton);
 		
 	}
 	

@@ -1,10 +1,10 @@
 package gameGUI;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
 
 public class GameOverPanel extends JPanel{
 	
+	private static final long serialVersionUID = 1L;
+
 	public GameOverPanel(String winnerName) {
 		JButton confirmButton = new JButton("Reiniciar o jogo");
 		confirmButton.setBounds(80, 80, 140, 40);

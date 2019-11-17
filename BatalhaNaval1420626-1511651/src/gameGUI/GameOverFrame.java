@@ -1,10 +1,10 @@
 package gameGUI;
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.*;
 
 public class GameOverFrame extends JFrame{
 	
+	private static final long serialVersionUID = 1L;
 	private GameOverPanel gop;
 	
 	public GameOverFrame(int wid, int hei, String winnerName) {

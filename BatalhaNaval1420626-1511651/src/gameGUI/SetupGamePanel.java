@@ -18,18 +18,23 @@ public class SetupGamePanel extends JPanel implements MouseListener{
 	private static final long serialVersionUID = 1L;
 	private weaponGraphics selectedWeapon = null;
 	private Rules rules;
+	private Font font = new Font("Serif", Font.PLAIN, 25);
 	private WeaponRotation rotation = WeaponRotation.ZERO;	
-	private JLabel labelName;
 	private JButton confirmButton;
 	
 	
 	public SetupGamePanel(Position iniPos, Position finalPos) {
 		this.iniPos = iniPos;
 		this.finalPos = finalPos;
+		
 		rules = Rules.getInstance();
-		setupGrid = new GridGraphics (iniPos, finalPos, rules.getInstance().getCurrentPlayerGrid());
+		
+		setupGrid = new GridGraphics (iniPos, finalPos, rules.getCurrentPlayerGrid());
+		
 		addMouseListener(this);
+		
 		setupGrid.buildGrid();
+		
 		weaponList =  new ArrayList<weaponGraphics>();
 		addedWeaponList = new ArrayList<weaponGraphics>();
 		weaponList.add(new weaponGraphics (WeaponType.SUBMARINO, new Position(100, 100), 30, Color.red));
@@ -48,17 +53,13 @@ public class SetupGamePanel extends JPanel implements MouseListener{
 		weaponList.add(new weaponGraphics (WeaponType.HIDROAVIAO, new Position(500, 250), 30, Color.yellow));
 		weaponList.add(new weaponGraphics (WeaponType.COURACADO, new Position(100, 350), 30, Color.black));
 		
-		//enter name label
-		labelName = new JLabel();		
-		labelName.setBounds(400, 500, 200, 100);
-		
-		this.add(labelName);
-		
 		confirmButton = new JButton("Acabei!");
-		confirmButton.setBounds(550, 100, 100, 40);
+		confirmButton.setLocation(1050, 520);
+		confirmButton.setBounds(1050, 520, 100, 40);
 		confirmButton.addActionListener(GameController.getInstance());
-		
+		confirmButton.setVisible(false);
 		this.add(confirmButton);
+		confirmButton.repaint();
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -67,10 +68,13 @@ public class SetupGamePanel extends JPanel implements MouseListener{
 		for (weaponGraphics w : weaponList)
 			w.paint(g);
 		
-		labelName.setText("Sua vez de selecionar a posi��o de suas armas, " + rules.getInstance().getCurrentPlayerName());
+		g.setFont(font);
+		g.setColor(Color.BLACK);
+		g.drawString("Sua vez de selecionar a posição de suas armas, " + rules.getCurrentPlayerName(), 100, 25);
 		
-		this.add(labelName);
-		this.add(confirmButton);
+		confirmButton.setLocation(1050, 520);
+		confirmButton.setBounds(1050, 520, 100, 40);
+		confirmButton.repaint();
 	}
 	
 	public void mouseClicked(MouseEvent e) {
@@ -93,10 +97,10 @@ public class SetupGamePanel extends JPanel implements MouseListener{
 					selectedWeapon = w;
 					weaponWasSelected = true;
 					rotation = rotation.initialize();
+					System.out.printf("Selected a " + selectedWeapon.getWeapon().getType() + "\n");
 				}
 			}
 						
-			System.out.printf("Selected a " + selectedWeapon + "\n");
 			
 			if(!weaponWasSelected) {
 				if(x > iniPos.getX() && x < finalPos.getX()) {
@@ -108,7 +112,7 @@ public class SetupGamePanel extends JPanel implements MouseListener{
 						int j = x/30;
 						int i = y/30;
 						
-						WeaponType wt = rules.getInstance().removeWeaponInCurrentPlayerGrid(new Position(i,j));
+						WeaponType wt = rules.removeWeaponInCurrentPlayerGrid(new Position(i,j));
 						
 						//Find weapon in addedWeaponsList
 						if(wt != null) 
@@ -143,7 +147,7 @@ public class SetupGamePanel extends JPanel implements MouseListener{
 			int j = x/30;
 			int i = y/30;
 			
-			if(rules.getInstance().setWeaponInCurrentPlayerGrid(new Weapon(selectedWeapon.getWeapon().getType(), rotation), new Position(i,j)))
+			if(rules.setWeaponInCurrentPlayerGrid(new Weapon(selectedWeapon.getWeapon().getType(), rotation), new Position(i,j)))
 			{
 				addedWeaponList.add(selectedWeapon);
 				weaponList.remove(selectedWeapon);				
@@ -155,11 +159,14 @@ public class SetupGamePanel extends JPanel implements MouseListener{
 			
 		}			
 		
+		
+		setupGrid = new GridGraphics (iniPos, finalPos, rules.getCurrentPlayerGrid());
+		setupGrid.buildGrid();
 		if(rules.isCurrentPlayersGridFull())
 			confirmButton.setVisible(true);
-		
-		setupGrid = new GridGraphics (iniPos, finalPos, rules.getInstance().getCurrentPlayerGrid());
-		setupGrid.buildGrid();
+		else
+			confirmButton.setVisible(false);
+		this.add(confirmButton);
 		paintComponent(getGraphics());
 	}
 	

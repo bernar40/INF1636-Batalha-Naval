@@ -1,10 +1,10 @@
 package gameGUI;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
 
 public class NamesPanel extends JPanel{
 	
+
+	private static final long serialVersionUID = 1L;
 	private JTextField textfieldPlayer1;
 	private JTextField textfieldPlayer2;
 	

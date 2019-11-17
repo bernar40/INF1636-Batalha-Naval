@@ -1,8 +1,5 @@
 package rules;
-import java.awt.*;
 import java.util.*;
-
-import models.weaponGraphics;
 import rules.Weapons.*;
 import utils.*;
 
@@ -12,6 +9,7 @@ public class Player {
 	private Grid ownWeaponsView;
 	private Grid enemyWeaponsView;
 	private ArrayList<Weapon>  ownWeapons;
+	@SuppressWarnings("unused")
 	private ArrayList<Weapon> 	enemyWeapons;
 	private int currentWeaponQty;
 	

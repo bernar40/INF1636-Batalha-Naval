@@ -9,23 +9,23 @@ public enum WeaponRotation {
 	public WeaponRotation nextRotation() {
 		switch(this) {
 			case ZERO:
-				return this.NINETY;
+				return WeaponRotation.NINETY;
 				
 			case NINETY:
-				return this.ONEEIGHTY;
+				return WeaponRotation.ONEEIGHTY;
 				
 			case ONEEIGHTY:
-				return this.TWOSEVENTY;
+				return WeaponRotation.TWOSEVENTY;
 				
 			case TWOSEVENTY:
-				return this.ZERO;
+				return WeaponRotation.ZERO;
 						
 			default:
-				return this.ZERO;			
+				return WeaponRotation.ZERO;			
 		}
 	}
 	
 	public WeaponRotation initialize() {
-		return this.ZERO;
+		return WeaponRotation.ZERO;
 	}
 }

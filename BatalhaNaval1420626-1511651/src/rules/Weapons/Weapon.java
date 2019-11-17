@@ -60,6 +60,8 @@ public class Weapon {
 				
 				weaponPositions.add(new Position(0,0));
 				break;
+			default:
+				break;
 		}
 	}
 		
@@ -105,6 +107,8 @@ public class Weapon {
 				weaponHealth = 1;
 				
 				weaponPositions.add(new Position(0,0));
+				break;
+			default:
 				break;
 		}
 		

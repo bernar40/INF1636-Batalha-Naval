@@ -1,10 +1,10 @@
 package gameGUI;
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.*;
 
 public class NamesFrame extends JFrame{
 	
+	private static final long serialVersionUID = 1L;
 	private NamesPanel np;
 	
 	public NamesFrame(int wid, int hei) {

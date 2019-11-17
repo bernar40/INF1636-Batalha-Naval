@@ -1,8 +1,6 @@
 package models;
 import java.awt.geom.Line2D;
-
 import rules.Weapons.WeaponType;
-
 import java.awt.*;
 import utils.*;
 
@@ -50,6 +48,7 @@ public class GridGraphics {
 	public void setGridValue(Position p) {
 		
 		GridValue gridVal = gridValues.getValue(p);
+		@SuppressWarnings("unused")
 		Color blockColor = weaponGraphics.findColorFromWeaponType(gridVal.weaponType);
 		
 		switch(gridVal.listIndex) {
@@ -133,17 +132,17 @@ public class GridGraphics {
 		
 	}
 	
-	private void printGrid() {
-		System.out.printf("\n");
-		for(int i=0;i<15;i++) {
-			for(int j=0;j<15;j++) {
-				GridValue gridVal = gridValues.getValue(new Position(i, j));
-				
-//				System.out.printf(" " + (new Integer(gridVal.listIndex)).toString() + " " + gridVal.weaponType);
-				
-			}
-//			System.out.printf("\n");
-		}
-		
-	}
+//	private void printGrid() {
+//		System.out.printf("\n");
+//		for(int i=0;i<15;i++) {
+//			for(int j=0;j<15;j++) {
+//				GridValue gridVal = gridValues.getValue(new Position(i, j));
+//				
+////				System.out.printf(" " + (new Integer(gridVal.listIndex)).toString() + " " + gridVal.weaponType);
+//				
+//			}
+////			System.out.printf("\n");
+//		}
+//		
+//	}
 }
