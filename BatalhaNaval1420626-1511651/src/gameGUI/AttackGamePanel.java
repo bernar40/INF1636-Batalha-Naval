@@ -81,8 +81,10 @@ public class AttackGamePanel extends JPanel implements MouseListener{
 		int i = y/30;
 		
 		if(rules.hitWeaponInPositionInGrid(new Position(i,j))) {
-			if(rules.isGameOver())
+			if(rules.isGameOver()) {
 				GameController.getInstance().endGame(rules.getCurrentPlayerName());
+				return;
+			}
 			
 			System.out.printf("Clicked %d, %d\n", i, j);
 						
@@ -93,7 +95,12 @@ public class AttackGamePanel extends JPanel implements MouseListener{
 			currentPlayerGrid .buildGrid();
 			paintComponent(getGraphics()); 
 			
-			alreadyAttacked = true;
+			rules.hit();
+			
+			if (rules.attackOver())
+				alreadyAttacked = true;
+			else
+				alreadyAttacked = false;
 		}
 		
 		if(alreadyAttacked)

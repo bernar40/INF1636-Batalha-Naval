@@ -3,7 +3,8 @@ import java.util.*;
 import rules.Weapons.*;
 import utils.*;
 
-public class Player {
+public class Player 
+{
 	private int aliveWeapons;
 	private String playerName;
 	private Grid ownWeaponsView;
@@ -12,8 +13,10 @@ public class Player {
 	@SuppressWarnings("unused")
 	private ArrayList<Weapon> 	enemyWeapons;
 	private int currentWeaponQty;
+	private int hitCount;
 	
-	public Player() {
+	public Player() 
+	{
 		aliveWeapons 		= 15;
 		currentWeaponQty 	= 0;
 		
@@ -23,30 +26,36 @@ public class Player {
 		ownWeapons 		= new ArrayList<Weapon> ();
 		enemyWeapons 	= new ArrayList<Weapon> ();
 		
-		
+		hitCount		= 3;
 	}
 	
-	public String getName() {
+	public String getName() 
+	{
 		return playerName;
 	}
 	
-	public void setName(String name) {
+	public void setName(String name) 
+	{
 		playerName = name;
 	}
 	
-	public Grid getOwnGrid() {
+	public Grid getOwnGrid() 
+	{
 		return ownWeaponsView;
 	}
 	
-	public Grid getEnemyGrid() {
+	public Grid getEnemyGrid() 
+	{
 		return enemyWeaponsView;
 	}
 	
-	public Boolean checkIfNoWeaponsLeft() {
+	public Boolean checkIfNoWeaponsLeft() 
+	{
 		return aliveWeapons == 0;
 	}
 	
-	public Boolean isGridFull() {
+	public Boolean isGridFull() 
+	{
 		return currentWeaponQty == 15;
 	}
 	
@@ -254,5 +263,34 @@ public class Player {
 			
 		}
 		currentWeaponQty--;
+	}
+	
+	public void discountHit()
+	{
+		hitCount--;
+	}
+	
+	public boolean noMoreHitsLeft()
+	{
+		return hitCount == 0;
+	}
+	
+	public void resetHitCount()
+	{
+		hitCount = 3;
+	}
+	
+	public void reset()
+	{
+		aliveWeapons 		= 15;
+		currentWeaponQty 	= 0;
+		
+		ownWeaponsView 		= new Grid(15, 15, -1);
+		enemyWeaponsView 	= new Grid(15, 15, -1);
+		
+		ownWeapons 		= new ArrayList<Weapon> ();
+		enemyWeapons 	= new ArrayList<Weapon> ();
+		
+		hitCount		= 3;
 	}
 }

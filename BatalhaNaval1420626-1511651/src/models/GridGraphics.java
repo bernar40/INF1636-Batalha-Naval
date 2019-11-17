@@ -132,6 +132,13 @@ public class GridGraphics {
 		
 	}
 	
+	public void cleanGrid()
+	{
+		for(int i=0;i<15;i++)
+			for(int j=0;j<15;j++)
+				gridValues.setValue(new Position(i, j), new GridValue(-1, null));
+	}
+	
 //	private void printGrid() {
 //		System.out.printf("\n");
 //		for(int i=0;i<15;i++) {

@@ -191,10 +191,12 @@ public class Rules {
 		switch (playerTurn) 
 		{
 			case PLAYER1:
+				player2.resetHitCount();
 				playerTurn = Turn.PLAYER2;
 				break;
 				
 			case PLAYER2:
+				player1.resetHitCount();
 				playerTurn = Turn.PLAYER1;
 				break;
 				
@@ -229,5 +231,47 @@ public class Rules {
 	public Boolean isSetupPhase() 
 	{
 		return state == GameState.SETUPPLAYER1 || state == GameState.SETUPPLAYER2;
+	}
+	
+	public void hit()
+	{
+		switch (playerTurn) 
+		{
+			case PLAYER1:
+				player1.discountHit();
+				break;
+							
+			case PLAYER2:
+				player2.discountHit();
+				break;
+				
+			default:
+				break;
+		}
+	}
+	
+	public boolean attackOver()
+	{
+		switch (playerTurn) 
+		{
+			case PLAYER1:
+				return player1.noMoreHitsLeft();
+							
+			case PLAYER2:
+				return player2.noMoreHitsLeft();
+				
+			default:
+				return false;
+		} 
+	}
+	
+	public void reset ()
+	{
+		playerTurn = Turn.PLAYER1;
+		state = GameState.SETUPPLAYER1;	
+		player1.reset();
+		player2.reset();
+		winningPlayerName = "";
+
 	}
 }

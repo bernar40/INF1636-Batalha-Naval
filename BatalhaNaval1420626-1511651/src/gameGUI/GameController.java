@@ -17,7 +17,7 @@ public class GameController implements ActionListener{
 	public static JFrame    currentGameFrame;
 	public static GameController instance;
 	public static Rules rules;
-	static String winnerName = "TEST";
+	static String winnerName;
 	
 	public static GameController getInstance() {
 		
@@ -53,7 +53,18 @@ public class GameController implements ActionListener{
 				break;
 				
 			case OVER:
-				currentGameFrame = new GameOverFrame (300, 180, winnerName);
+				UIManager.put("OptionPane.yesButtonText", "Reiniciar Jogo");
+				UIManager.put("OptionPane.noButtonText", "Não");
+				UIManager.put("OptionPane.cancelButtonText", "Cancelar");
+				int gameOverDialogBox = JOptionPane.showConfirmDialog(currentGameFrame, "Parabens " + winnerName + "!\n Você ganhou o jogo!",
+												"Game Over", JOptionPane.INFORMATION_MESSAGE);
+				if (gameOverDialogBox == 0) {
+					currentGameState = gameState.START;
+					Rules.getInstance().reset();
+					loadGameState();
+				}
+				else
+					System.exit(0);
 				break;
 				
 			default:
