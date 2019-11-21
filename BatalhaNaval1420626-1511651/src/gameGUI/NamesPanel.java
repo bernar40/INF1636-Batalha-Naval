@@ -12,6 +12,10 @@ public class NamesPanel extends JPanel{
 		JButton confirmButton = new JButton("Confirma");
 		confirmButton.setBounds(100, 200, 140, 40);
 		confirmButton.addActionListener(GameController.getInstance());
+		
+		JButton loadGame = new JButton("Carregar Jogo");
+		loadGame.setBounds(100, 250, 140, 40);
+		loadGame.addActionListener(GameController.getInstance());
 	 
 		//Player 1
 		JLabel labelPlayer1 = new JLabel();		
@@ -32,7 +36,9 @@ public class NamesPanel extends JPanel{
 		this.add(textfieldPlayer1);
 		this.add(labelPlayer2);
 		this.add(textfieldPlayer2);
-		this.add(confirmButton);    
+		this.add(confirmButton);
+		this.add(loadGame);    
+
 		this.setSize(300,300);    
 		this.setLayout(null);    
 		this.setVisible(true);    

@@ -45,39 +45,6 @@ public class GridGraphics {
 		}
 	}
 	
-	public void setGridValue(Position p) {
-		
-		GridValue gridVal = gridValues.getValue(p);
-		@SuppressWarnings("unused")
-		Color blockColor = weaponGraphics.findColorFromWeaponType(gridVal.weaponType);
-		
-		switch(gridVal.listIndex) {
-			case -1:
-				blockColor = Color.orange;
-				break;
-			
-			case 0:
-				blockColor = Color.pink;
-				break;
-	
-			case 1:
-				blockColor = Color.blue;
-				break;
-				
-			case 2:
-				blockColor = Color.yellow;
-				break;
-				
-			case 3:
-				blockColor = Color.red;
-				break;
-				
-			default:
-				break;
-		}
-		gridValues.setValue(p, new GridValue(gridVal.listIndex + 1, gridVal.weaponType));
-	}
-	
 	public void paintGrid(Graphics g, Boolean hideUncoveredWeapons) {
 		//printGrid();
 		Graphics2D g2d=(Graphics2D) g;

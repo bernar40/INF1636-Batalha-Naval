@@ -154,6 +154,8 @@ public class SetupGamePanel extends JPanel implements MouseListener{
 								}
 							}
 							weaponRemovedFromGrid = true;
+							couldNotPlaceWeapon = false;
+							
 							paintComponent(getGraphics());
 						}				
 					}

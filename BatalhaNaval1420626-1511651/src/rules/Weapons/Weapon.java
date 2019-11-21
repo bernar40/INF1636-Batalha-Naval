@@ -147,15 +147,6 @@ public class Weapon {
 			
 	}
 	
-	public Boolean weaponWasHit() {
-		weaponHealth--;
-		
-		if(weaponHealth == 0)
-			return true;
-		
-		return false;
-	}
-	
 	public ArrayList<Position> placeWeaponInGrid(Position leftCornerPosition){
 		ArrayList<Position> returningPositions = new ArrayList<Position>();
 		
@@ -170,70 +161,4 @@ public class Weapon {
 		return type;
 	}
 	
-	public int get_angle() {
-		return angle;
-	}
-	
-	public void rotate() {
-		if (type == WeaponType.DESTROYER) {
-			if (angle == 0) {
-				weaponPositions.add(new Position(0,0));
-				weaponPositions.add(new Position(1,0));
-				angle++;
-			}
-			if (angle == 1) {
-				weaponPositions.add(new Position(0,0));
-				weaponPositions.add(new Position(0,1));
-				angle = 0;
-			}
-		}
-		else if (type == WeaponType.COURACADO) {
-			if (angle == 0) {
-				weaponPositions.add(new Position(0,0));
-				weaponPositions.add(new Position(1,0));
-				weaponPositions.add(new Position(2,0));
-				weaponPositions.add(new Position(3,0));
-				weaponPositions.add(new Position(4,0));
-				angle++;
-			}
-			if (angle == 1) {
-				weaponPositions.add(new Position(0,0));
-				weaponPositions.add(new Position(0,1));
-				weaponPositions.add(new Position(0,2));
-				weaponPositions.add(new Position(0,3));
-				weaponPositions.add(new Position(0,4));
-				angle = 0;
-			}
-		}
-		else if (type == WeaponType.CRUZADOR) {
-			if (angle == 0) {
-				weaponPositions.add(new Position(0,0));
-				weaponPositions.add(new Position(1,0));
-				weaponPositions.add(new Position(2,0));
-				weaponPositions.add(new Position(3,0));
-				angle++;
-			}
-			if (angle == 1) {
-				weaponPositions.add(new Position(0,0));
-				weaponPositions.add(new Position(0,1));
-				weaponPositions.add(new Position(0,2));
-				weaponPositions.add(new Position(0,3));
-				angle = 0;
-			}
-		}
-		else if (type == WeaponType.HIDROAVIAO) {
-			if (angle == 0) {
-				weaponPositions.add(new Position(1,0));
-				weaponPositions.add(new Position(0,1));
-				weaponPositions.add(new Position(2,1));
-				angle++;
-			}
-			if (angle == 1) {
-				weaponPositions.add(new Position(0,1));
-				weaponPositions.add(new Position(1,0));
-				weaponPositions.add(new Position(1,2));
-				angle = 0;
-			}
-		}
-	}
 }

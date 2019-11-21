@@ -1,5 +1,7 @@
 package gameGUI;
 import rules.Rules;
+import rules.Turn;
+
 import javax.swing.*;
 import java.awt.event.*;
 
@@ -18,6 +20,7 @@ public class GameController implements ActionListener{
 	public static GameController instance;
 	public static Rules rules;
 	static String winnerName;
+	private boolean loaded = false;
 	
 	public static GameController getInstance() {
 		
@@ -34,7 +37,7 @@ public class GameController implements ActionListener{
 	
 	private void loadGameState() {
 		
-		if(currentGameFrame != null) {
+		if(currentGameFrame != null && loaded == false ) {
 			currentGameFrame.dispose();
 		}
 		
@@ -84,13 +87,32 @@ public class GameController implements ActionListener{
 		if(action.equals("Confirma")) {
 			currentGameState = gameState.SETUP;
 		}		
+		else if(action.equals("Carregar Jogo")) {
+			loaded = true;
+			Turn playerWithTurn = Rules.getInstance().load();
+			
+			switch(playerWithTurn) {
+				case PLAYER1:
+					currentGameState = gameState.PLAYER1ATTACK;
+					break;
+					
+				case PLAYER2:
+					currentGameState = gameState.PLAYER2ATTACK;
+					break;
+				
+				default:
+					break;
+			}
+		}		
 		else if(action.equals("Acabei!")) {
 			Rules.getInstance().changeTurn();
 		}
 		else if(action.equals("Termina a vez")) {
 			Rules.getInstance().changeTurn();
 		}
-		
+		else if(action.equals("Salvar Jogo")) {
+			Rules.getInstance().save();
+		}
 		if(Rules.getInstance().isAttackPhase()) {
 			switchState();
 		}
