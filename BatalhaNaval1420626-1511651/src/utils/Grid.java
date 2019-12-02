@@ -36,7 +36,10 @@ public class Grid {
 	public Boolean isOutsideOfGrid(Position p) 
 	{
 		try {
-			getValue(p);
+			if (p.getX() < 0 || p.getX() >= xSize)
+				return true;
+			if (p.getY() < 0 || p.getY() >= ySize)
+				return true;
 		}
 		catch(Exception e){
 			return true;

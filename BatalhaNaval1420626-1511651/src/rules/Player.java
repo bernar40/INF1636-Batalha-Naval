@@ -18,7 +18,7 @@ public class Player
 	public Player() 
 	{
 		aliveWeapons 		= 15;
-		currentWeaponQty 	= 14;
+		currentWeaponQty 	= 0;
 		
 		ownWeaponsView 		= new Grid(15, 15, -1);
 		
